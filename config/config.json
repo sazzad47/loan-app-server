@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "freeodoo",
+    "password": "4QzGy_ji",
+    "database": "freeodoo_credit_app",
+    "host": "tgiscaleme.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "freeodoo",
+    "password": "4QzGy_ji",
+    "database": "freeodoo_credit_app",
+    "host": "tgiscaleme.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "freeodoo",
+    "password": "4QzGy_ji",
+    "database": "freeodoo_credit_app",
+    "host": "tgiscaleme.com",
+    "dialect": "mysql"
+  }
+}
