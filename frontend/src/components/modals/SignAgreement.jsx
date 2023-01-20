@@ -7,18 +7,38 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { docStateUpdate } from "../../state/features/docs/docSlice";
 
 const SignAgreement = (props, ref) => {
   const [open, setOpen] = useState(false);
+  const [signed, setSigned] = useState(false);
   const [checked, setChecked] = useState(false);
   const theme = useTheme();
+  const dispatch = useDispatch();
 
-  useImperativeHandle(ref, () => ({
-    open() {
-      setOpen(true);
+  const {
+    photo_ID,
+    proof_of_address,
+    user_agreement_freeze,
+    consumer_office_freeze,
+    lexis_nexis_freeze,
+    positive_account,
+  } = useSelector((store) => store.docs);
+  const { email } = useSelector((store) => store.auth);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        open() {
+          setOpen(true);
+        },
+        checked: checked,
+      };
     },
-    checked: checked,
-  }));
+    [checked]
+  );
 
   const handleClose = () => {
     setOpen(false);
@@ -48,7 +68,27 @@ const SignAgreement = (props, ref) => {
               </Typography>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox color="primary" />}
+                  control={
+                    <Checkbox
+                      color="primary"
+                      name="sign-agreement"
+                      checked={signed}
+                      onChange={(e) => {
+                        setSigned(e.target.checked);
+                        dispatch(
+                          docStateUpdate({
+                            photo_ID,
+                            email,
+                            proof_of_address,
+                            user_agreement_freeze,
+                            consumer_office_freeze,
+                            lexis_nexis_freeze,
+                            positive_account,
+                          })
+                        );
+                      }}
+                    />
+                  }
                   label="I agree to terms and conditions."
                 />
               </Grid>

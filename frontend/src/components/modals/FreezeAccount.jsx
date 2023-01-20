@@ -9,6 +9,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import ConsumerOffice from "./freezeaccount/ConsumerOffice";
+import LexisNexis from "./freezeaccount/LexisNexis";
 
 const FreezeAccount = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -59,24 +61,8 @@ const FreezeAccount = (props, ref) => {
                   bgcolor: "background.paper",
                 }}
               >
-                <ListItem
-                  secondaryAction={<Checkbox edge="end" />}
-                  disablePadding
-                >
-                  <ListItemButton>
-                    <ListItemText
-                      primary={`https://www.ars-consumeroffice.com/add`}
-                    />
-                  </ListItemButton>
-                </ListItem>
-                <ListItem
-                  secondaryAction={<Checkbox edge="end" />}
-                  disablePadding
-                >
-                  <ListItemButton>
-                    <ListItemText primary={`https://optout.lexisnexis.com/`} />
-                  </ListItemButton>
-                </ListItem>
+                <ConsumerOffice />
+                <LexisNexis />
                 <ListItem
                   secondaryAction={<Checkbox edge="end" />}
                   disablePadding
