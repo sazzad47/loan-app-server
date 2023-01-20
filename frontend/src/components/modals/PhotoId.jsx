@@ -6,20 +6,47 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProofID from "../../assets/proof_id.png";
+import { docStateUpdate } from "../../state/features/docs/docSlice";
 
 const PhotoId = (props, ref) => {
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [file, setFile] = useState(null);
-  const [fileContent, setFileContent] = useState(null);
-
+  // const [fileContent, setFileContent] = useState(null);
   const theme = useTheme();
+  const dispatch = useDispatch();
 
-  useImperativeHandle(ref, () => ({
+  const {
+    proof_of_address,
+    user_agreement_freeze,
+    consumer_office_freeze,
+    lexis_nexis_freeze,
+    positive_account,
+  } = useSelector((store) => store.docs);
+  const { email } = useSelector((store) => store.auth);
+
+  /*   useImperativeHandle(ref, () => ({
     open() {
       setOpen(true);
     },
-  }));
+    
+    checked: checked,
+  })); */
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        open() {
+          setOpen(true);
+        },
+        checked: checked,
+      };
+    },
+    [checked]
+  );
 
   const handleClose = () => {
     setOpen(false);
@@ -30,10 +57,11 @@ const PhotoId = (props, ref) => {
     setFile(selectedFile);
 
     const reader = new FileReader();
-    reader.onload = (event) => {
-      setFileContent(event.target.result);
-    };
-    reader.readAsText(selectedFile);
+
+    // reader.onload = (event) => {
+    //   setFileContent(event.target.result);
+    // };
+    // reader.readAsText(selectedFile);
   };
 
   return (
@@ -100,13 +128,26 @@ const PhotoId = (props, ref) => {
               <TextField type="file" onChange={handleFileSelect} size="small" />
               <Button
                 variant="contained"
+                disabled={!file}
                 color="primary"
                 size="small"
                 sx={{
                   textTransform: "none",
                 }}
                 onClick={() => {
-                  console.log(file);
+                  dispatch(
+                    docStateUpdate({
+                      photo_ID: file.name,
+                      email,
+                      proof_of_address,
+                      user_agreement_freeze,
+                      consumer_office_freeze,
+                      lexis_nexis_freeze,
+                      positive_account,
+                    })
+                  );
+                  setChecked(true);
+                  handleClose();
                 }}
               >
                 Upload

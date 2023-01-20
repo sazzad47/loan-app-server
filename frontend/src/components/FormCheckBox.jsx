@@ -20,7 +20,7 @@ const FormCheckBox = ({ label }) => {
           }}
         >
           <FormControlLabel
-            control={<Checkbox name="gilad" />}
+            control={<Checkbox name="check-box" />}
             sx={{
               "& .MuiFormControlLabel-label": {
                 fontSize: "14px",

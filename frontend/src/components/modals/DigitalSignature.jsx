@@ -17,6 +17,7 @@ const steps = [
 
 const DigitalSignature = (props, ref) => {
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(1);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -45,6 +46,7 @@ const DigitalSignature = (props, ref) => {
     open() {
       setOpen(true);
     },
+    checked: checked,
   }));
 
   const handleClose = () => {

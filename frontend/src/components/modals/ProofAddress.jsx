@@ -1,24 +1,59 @@
-import { useTheme } from "@mui/material";
+import { TextField, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProofAdd from "../../assets/proof_add.png";
+import { docStateUpdate } from "../../state/features/docs/docSlice";
 
 const ProofAddress = (props, ref) => {
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [file, setFile] = useState(null);
+  // const [fileContent, setFileContent] = useState(null);
   const theme = useTheme();
 
-  useImperativeHandle(ref, () => ({
-    open() {
-      setOpen(true);
+  const dispatch = useDispatch();
+
+  const {
+    photo_ID,
+    user_agreement_freeze,
+    consumer_office_freeze,
+    lexis_nexis_freeze,
+    positive_account,
+  } = useSelector((store) => store.docs);
+  const { email } = useSelector((store) => store.auth);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        open() {
+          setOpen(true);
+        },
+        checked: checked,
+      };
     },
-  }));
+    [checked]
+  );
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleFileSelect = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+
+    const reader = new FileReader();
+
+    // reader.onload = (event) => {
+    //   setFileContent(event.target.result);
+    // };
+    // reader.readAsText(selectedFile);
   };
 
   return (
@@ -84,33 +119,32 @@ const ProofAddress = (props, ref) => {
                 gap: "10px",
               }}
             >
+              <TextField type="file" onChange={handleFileSelect} size="small" />
               <Button
                 variant="contained"
-                component="label"
-                disableRipple
+                disabled={!file}
+                color="primary"
+                size="small"
                 sx={{
                   textTransform: "none",
-                  ":hover": {
-                    background: theme.palette.primary.light,
-                  },
+                }}
+                onClick={() => {
+                  dispatch(
+                    docStateUpdate({
+                      photo_ID,
+                      email,
+                      proof_of_address: file.name,
+                      user_agreement_freeze,
+                      consumer_office_freeze,
+                      lexis_nexis_freeze,
+                      positive_account,
+                    })
+                  );
+                  setChecked(true);
+                  handleClose();
                 }}
               >
-                Upload image using computer
-                <input hidden accept="image/*" multiple type="file" />
-              </Button>
-              <Button
-                variant="contained"
-                component="label"
-                disableRipple
-                sx={{
-                  textTransform: "none",
-                  ":hover": {
-                    background: theme.palette.primary.light,
-                  },
-                }}
-              >
-                Use smartphone to take picture
-                <input hidden accept="image/*" multiple type="file" />
+                Upload
               </Button>
             </Box>
           </Box>

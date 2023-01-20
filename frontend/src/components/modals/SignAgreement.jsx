@@ -10,12 +10,14 @@ import React, { forwardRef, useImperativeHandle, useState } from "react";
 
 const SignAgreement = (props, ref) => {
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
   const theme = useTheme();
 
   useImperativeHandle(ref, () => ({
     open() {
       setOpen(true);
     },
+    checked: checked,
   }));
 
   const handleClose = () => {

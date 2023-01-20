@@ -17,7 +17,6 @@ const authSlice = createSlice({
       state.error = false;
       state.msg = "";
       state.loading = false;
-      state.id = "";
     },
   },
   extraReducers: (builder) => {
@@ -27,6 +26,7 @@ const authSlice = createSlice({
     builder.addCase(registerUser.fulfilled, (state, action) => {
       state.loading = false;
       state.email = action.payload.newUser.email;
+      state.id = action.payload.newUser.id;
       state.error = false;
       state.msg = action.payload.msg;
     });
