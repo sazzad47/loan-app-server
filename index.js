@@ -4,6 +4,8 @@ const authRoute = require("./routes/Authentication");
 const userRoute = require("./routes/Users");
 const docsRoute = require("./routes/Documents");
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
 
 const { sequelize } = require("./models");
 

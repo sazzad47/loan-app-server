@@ -3,12 +3,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import ProofID from "../../assets/proof_id.png";
 
 const PhotoId = (props, ref) => {
   const [open, setOpen] = useState(false);
+  const [file, setFile] = useState(null);
+  const [fileContent, setFileContent] = useState(null);
+
   const theme = useTheme();
 
   useImperativeHandle(ref, () => ({
@@ -21,26 +25,20 @@ const PhotoId = (props, ref) => {
     setOpen(false);
   };
 
+  const handleFileSelect = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setFileContent(event.target.result);
+    };
+    reader.readAsText(selectedFile);
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose} maxWidth="md">
-        {/*   <Box sx={{ margin: "1.5em" }}>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-              const stepProps = {};
-              const labelProps = {};
-
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-        </Box> */}
         <DialogContent>
           <Box
             sx={{
@@ -91,6 +89,7 @@ const PhotoId = (props, ref) => {
                 <img height={200} src={ProofID} alt="proof id" />
               </Box>
             </Box>
+
             <Box
               sx={{
                 marginTop: "10px",
@@ -98,33 +97,19 @@ const PhotoId = (props, ref) => {
                 gap: "10px",
               }}
             >
+              <TextField type="file" onChange={handleFileSelect} size="small" />
               <Button
                 variant="contained"
-                component="label"
-                disableRipple
+                color="primary"
+                size="small"
                 sx={{
                   textTransform: "none",
-                  ":hover": {
-                    background: theme.palette.primary.light,
-                  },
+                }}
+                onClick={() => {
+                  console.log(file);
                 }}
               >
-                Upload image using computer
-                <input hidden accept="image/*" multiple type="file" />
-              </Button>
-              <Button
-                variant="contained"
-                component="label"
-                disableRipple
-                sx={{
-                  textTransform: "none",
-                  ":hover": {
-                    background: theme.palette.primary.light,
-                  },
-                }}
-              >
-                Use smartphone to take picture
-                <input hidden accept="image/*" multiple type="file" />
+                Upload
               </Button>
             </Box>
           </Box>
