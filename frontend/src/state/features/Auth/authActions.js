@@ -5,13 +5,25 @@ import api from "../../api/api";
 export const registerUser = createAsyncThunk(
   "auth/register",
   async ({ email, password }) => {
-    console.log(email, password);
     try {
       const { data } = await api.post("/auth/register", { email, password });
       return data;
     } catch (error) {
       //console.log(error);
       // throw error
+      throw error;
+    }
+  }
+);
+
+// login
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }) => {
+    try {
+      const { data } = await api.post("/auth/login", { email, password });
+      return data;
+    } catch (error) {
       throw error;
     }
   }

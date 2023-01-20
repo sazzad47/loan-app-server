@@ -1,6 +1,5 @@
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
@@ -9,6 +8,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
+import StepperButtons from "../utils/StepperButtons";
 import GetStarted from "./scoresignup/GetStarted";
 import Signin from "./scoresignup/Signin";
 import Signup from "./scoresignup/Signup";
@@ -72,7 +72,12 @@ const ScoreSignup = (props, ref) => {
         </Box>
         <DialogContent>
           {activeStep === steps.length ? (
-            <React.Fragment>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <Signin />
               <Grid
                 container
@@ -106,7 +111,13 @@ const ScoreSignup = (props, ref) => {
                   </Link>
                 </Grid>
               </Grid>
-            </React.Fragment>
+              <StepperButtons
+                steps={steps}
+                handleBack={handleBack}
+                handleNext={handleNext}
+                activeStep={activeStep}
+              />
+            </Box>
           ) : (
             <React.Fragment>
               <Box
@@ -147,42 +158,12 @@ const ScoreSignup = (props, ref) => {
                 ) : (
                   <Signin />
                 )}
-                <Box
-                  sx={{
-                    alignSelf: "center",
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "10px",
-                    pt: 2,
-                  }}
-                >
-                  <Button
-                    color="inherit"
-                    disabled={activeStep === 1}
-                    onClick={handleBack}
-                    sx={{
-                      textTransform: "none",
-                      background: theme.palette.grey[300],
-                    }}
-                  >
-                    Back
-                  </Button>
-
-                  <Button
-                    onClick={handleNext}
-                    disabled={activeStep === steps.length}
-                    sx={{
-                      textTransform: "none",
-                      background: theme.palette.primary.main,
-                      color: theme.palette.grey[100],
-                      ":hover": {
-                        background: theme.palette.primary.light,
-                      },
-                    }}
-                  >
-                    Next
-                  </Button>
-                </Box>
+                <StepperButtons
+                  steps={steps}
+                  handleBack={handleBack}
+                  handleNext={handleNext}
+                  activeStep={activeStep}
+                />
               </Box>
             </React.Fragment>
           )}

@@ -1,6 +1,5 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Snackbar, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -8,7 +7,9 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import Snackbar from "@mui/material/Snackbar";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { FormikProvider, useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +17,7 @@ import * as yup from "yup";
 import Logo from "../../../assets/chslogo.png";
 import { registerUser } from "../../../state/features/Auth/authActions";
 import { clearAuthMessages } from "../../../state/features/Auth/authSlice";
-import Spinner from "../../Spinner";
+import Spinner from "../../utils/Spinner";
 
 const initialValues = {
   email: "",
@@ -28,8 +29,8 @@ const userSchema = yup.object().shape({
   email: yup
     .string()
     .email("Invalid email")
-    .required("This field cannot is required!"),
-  password: yup.string().required("This field cannot is required!"),
+    .required("This field is required!"),
+  password: yup.string().required("This field is required!"),
   password2: yup.string().when("password", {
     is: (val) => (val && val.length > 0 ? true : false),
     then: yup
