@@ -4,9 +4,11 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import PropTypes from "prop-types";
 import * as React from "react";
+import CreditInfo from "./components/CreditInfo";
+import DisputeDetails from "./components/DisputeDetails";
 import Home from "./components/Home";
 
-function TabPanel(props) {
+export function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -43,11 +45,11 @@ export default function PageTabs() {
     },
     {
       label: "Dispute Details",
-      component: <>Dispute details</>,
+      component: <DisputeDetails />,
     },
     {
       label: "Credit info",
-      component: <>Credit info</>,
+      component: <CreditInfo />,
     },
     {
       label: "Resources",

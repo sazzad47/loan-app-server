@@ -47,13 +47,6 @@ const ProofAddress = (props, ref) => {
   const handleFileSelect = (event) => {
     const selectedFile = event.target.files[0];
     setProofOfAddress(selectedFile);
-
-    const reader = new FileReader();
-
-    // reader.onload = (event) => {
-    //   setFileContent(event.target.result);
-    // };
-    // reader.readAsText(selectedFile);
   };
 
   return (

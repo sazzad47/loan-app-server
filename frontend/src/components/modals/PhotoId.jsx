@@ -49,13 +49,6 @@ const PhotoId = (props, ref) => {
   const handleFileSelect = (event) => {
     const selectedFile = event.target.files[0];
     setPhotoID(selectedFile);
-
-    const reader = new FileReader();
-
-    // reader.onload = (event) => {
-    //   setPhotoIDContent(event.target.result);
-    // };
-    // reader.readAsText(selectedFile);
   };
 
   return (
