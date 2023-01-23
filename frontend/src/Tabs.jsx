@@ -7,6 +7,7 @@ import * as React from "react";
 import CreditInfo from "./components/CreditInfo";
 import DisputeDetails from "./components/DisputeDetails";
 import Home from "./components/Home";
+import Resources from "./components/Resources";
 
 export function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,7 +54,7 @@ export default function PageTabs() {
     },
     {
       label: "Resources",
-      component: <>Resources</>,
+      component: <Resources />,
     },
     {
       label: "Settings",
