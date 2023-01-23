@@ -6,7 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
 
@@ -14,13 +19,13 @@ const SignAgreement = (props, ref) => {
   const [open, setOpen] = useState(false);
   const [signed, setSigned] = useState(false);
   const [checked, setChecked] = useState(false);
+
   const theme = useTheme();
   const dispatch = useDispatch();
 
   const {
     photo_ID,
     proof_of_address,
-    user_agreement_freeze,
     consumer_office_freeze,
     lexis_nexis_freeze,
     positive_account,
@@ -43,6 +48,26 @@ const SignAgreement = (props, ref) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const onChange = () => {
+    setSigned((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (signed) {
+      dispatch(
+        docStateUpdate({
+          photo_ID,
+          email,
+          proof_of_address,
+          user_agreement_freeze: signed,
+          consumer_office_freeze,
+          lexis_nexis_freeze,
+          positive_account,
+        })
+      );
+    }
+  });
 
   return (
     <div>
@@ -73,20 +98,7 @@ const SignAgreement = (props, ref) => {
                       color="primary"
                       name="sign-agreement"
                       checked={signed}
-                      onChange={(e) => {
-                        setSigned(e.target.checked);
-                        dispatch(
-                          docStateUpdate({
-                            photo_ID,
-                            email,
-                            proof_of_address,
-                            user_agreement_freeze,
-                            consumer_office_freeze,
-                            lexis_nexis_freeze,
-                            positive_account,
-                          })
-                        );
-                      }}
+                      onChange={onChange}
                     />
                   }
                   label="I agree to terms and conditions."
@@ -105,3 +117,14 @@ const SignAgreement = (props, ref) => {
 };
 
 export default forwardRef(SignAgreement);
+
+/* 
+1. Linked Lists
+2. Stacks
+3. Queues
+4. Arrays
+5. Strings
+6. Trees
+7. Hashtables
+8. Graphs
+*/

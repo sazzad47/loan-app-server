@@ -13,8 +13,8 @@ import { docStateUpdate } from "../../state/features/docs/docSlice";
 const PhotoId = (props, ref) => {
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [file, setFile] = useState(null);
-  // const [fileContent, setFileContent] = useState(null);
+  const [photo_ID, setPhotoID] = useState(null);
+  // const [fileContent, setPhotoIDContent] = useState(null);
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -27,13 +27,7 @@ const PhotoId = (props, ref) => {
   } = useSelector((store) => store.docs);
   const { email } = useSelector((store) => store.auth);
 
-  /*   useImperativeHandle(ref, () => ({
-    open() {
-      setOpen(true);
-    },
-    
-    checked: checked,
-  })); */
+  console.log(typeof file);
 
   useImperativeHandle(
     ref,
@@ -54,12 +48,12 @@ const PhotoId = (props, ref) => {
 
   const handleFileSelect = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    setPhotoID(selectedFile);
 
     const reader = new FileReader();
 
     // reader.onload = (event) => {
-    //   setFileContent(event.target.result);
+    //   setPhotoIDContent(event.target.result);
     // };
     // reader.readAsText(selectedFile);
   };
@@ -125,10 +119,15 @@ const PhotoId = (props, ref) => {
                 gap: "10px",
               }}
             >
-              <TextField type="file" onChange={handleFileSelect} size="small" />
+              <TextField
+                type="file"
+                name="photo_ID"
+                onChange={handleFileSelect}
+                size="small"
+              />
               <Button
                 variant="contained"
-                disabled={!file}
+                disabled={!photo_ID}
                 color="primary"
                 size="small"
                 sx={{
@@ -137,7 +136,7 @@ const PhotoId = (props, ref) => {
                 onClick={() => {
                   dispatch(
                     docStateUpdate({
-                      photo_ID: file.name,
+                      photo_ID,
                       email,
                       proof_of_address,
                       user_agreement_freeze,

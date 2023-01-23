@@ -8,7 +8,7 @@ class Interceptor extends React.Component {
   }
   componentDidMount() {
     this.request_interceptor = api.interceptors.request.use((config) => {
-      if (config.url === "") {
+      if (config.url === "/docs") {
         config.headers = {
           "Content-Type": "multipart/form-data",
         };

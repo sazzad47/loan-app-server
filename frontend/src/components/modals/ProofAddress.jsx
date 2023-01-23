@@ -12,7 +12,7 @@ import { docStateUpdate } from "../../state/features/docs/docSlice";
 const ProofAddress = (props, ref) => {
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [file, setFile] = useState(null);
+  const [proof_of_address, setProofOfAddress] = useState(null);
   // const [fileContent, setFileContent] = useState(null);
   const theme = useTheme();
 
@@ -46,7 +46,7 @@ const ProofAddress = (props, ref) => {
 
   const handleFileSelect = (event) => {
     const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    setProofOfAddress(selectedFile);
 
     const reader = new FileReader();
 
@@ -119,10 +119,15 @@ const ProofAddress = (props, ref) => {
                 gap: "10px",
               }}
             >
-              <TextField type="file" onChange={handleFileSelect} size="small" />
+              <TextField
+                type="file"
+                name="proof_of_address"
+                onChange={handleFileSelect}
+                size="small"
+              />
               <Button
                 variant="contained"
-                disabled={!file}
+                disabled={!proof_of_address}
                 color="primary"
                 size="small"
                 sx={{
@@ -133,7 +138,7 @@ const ProofAddress = (props, ref) => {
                     docStateUpdate({
                       photo_ID,
                       email,
-                      proof_of_address: file.name,
+                      proof_of_address,
                       user_agreement_freeze,
                       consumer_office_freeze,
                       lexis_nexis_freeze,

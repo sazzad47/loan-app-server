@@ -12,6 +12,15 @@ export const submitUploadFiles = createAsyncThunk(
     lexis_nexis_freeze,
     positive_account,
   }) => {
+    console.log({
+      email,
+      photo_ID,
+      proof_of_address,
+      user_agreement_freeze,
+      consumer_office_freeze,
+      lexis_nexis_freeze,
+      positive_account,
+    });
     try {
       const { data } = await api.post("/docs", {
         email,
