@@ -1,9 +1,11 @@
 import PageTabs from "./Tabs";
+import Admin from "./Admin";
 
 function App() {
   return (
     <>
-      <PageTabs />
+      {/* <PageTabs /> */}
+      <Admin />
     </>
   );
 }
