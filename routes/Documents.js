@@ -11,7 +11,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     console.log(file);
-    cb(null, file.originalname);
+    const username = req.body.email;
+    cb(null, username + "-" + Date.now() + "-" + file.originalname);
   },
 });
 

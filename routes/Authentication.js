@@ -14,6 +14,12 @@ router.post("/register", async (req, res) => {
       //   username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      state: req.body.state,
+      zip_code: req.body.zip_code,
+      city: req.body.city,
+      phone: req.body.phone,
     });
     return res.status(201).json({ msg: "user saved successfully", newUser });
   } catch (err) {
