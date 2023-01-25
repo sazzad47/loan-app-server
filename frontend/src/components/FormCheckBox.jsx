@@ -5,10 +5,13 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import React, { cloneElement, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const FormCheckBox = ({ label }) => {
   const theme = useTheme();
   const ref = useRef(null);
+
+  const { email } = useSelector((store) => store.auth);
 
   return (
     <>
@@ -33,8 +36,19 @@ const FormCheckBox = ({ label }) => {
             label={label.label}
           />
           <Chip
-            color="primary"
+            color={
+              !email &&
+              label.label !==
+                "Signup for Credit Hero Score and Share Login Details"
+                 ? "default"
+                : "primary"
+            }
             component={Button}
+            disabled={
+              !email &&
+              label.label !==
+                "Signup for Credit Hero Score and Share Login Details"
+            }
             disableRipple
             onClick={() => ref.current?.open()}
             size="small"
