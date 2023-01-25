@@ -18,6 +18,13 @@ const authSlice = createSlice({
       state.msg = "";
       state.loading = false;
     },
+    logoutUser: (state) => {
+      state.loading = false;
+      state.id = "";
+      state.email = "";
+      state.error = false;
+      state.msg = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerUser.pending, (state) => {

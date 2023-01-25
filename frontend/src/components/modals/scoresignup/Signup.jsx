@@ -23,6 +23,12 @@ const initialValues = {
   email: "",
   password: "",
   password2: "",
+  first_name: "",
+  last_name: "",
+  state: "",
+  zip_code: "",
+  city: "",
+  phone: "",
 };
 
 const userSchema = yup.object().shape({
@@ -30,6 +36,12 @@ const userSchema = yup.object().shape({
     .string()
     .email("Invalid email")
     .required("This field is required!"),
+  first_name: yup.string().required("This field is required!"),
+  last_name: yup.string().required("This field is required!"),
+  state: yup.string().required("This field is required!"),
+  zip_code: yup.string().required("This field is required!"),
+  city: yup.string().required("This field is required!"),
+  phone: yup.string().required("This field is required!"),
   password: yup.string().required("This field is required!"),
   password2: yup.string().when("password", {
     is: (val) => (val && val.length > 0 ? true : false),
@@ -55,8 +67,28 @@ export default function Signup() {
     initialValues,
     validationSchema: userSchema,
     onSubmit(values) {
-      const { email, password } = values;
-      dispatch(registerUser({ email, password }));
+      const {
+        email,
+        password,
+        first_name,
+        last_name,
+        state,
+        zip_code,
+        city,
+        phone,
+      } = values;
+      dispatch(
+        registerUser({
+          email,
+          password,
+          first_name,
+          last_name,
+          state,
+          zip_code,
+          city,
+          phone,
+        })
+      );
     },
   });
 
@@ -117,6 +149,40 @@ export default function Signup() {
                   }}
                   required
                   fullWidth
+                  id="first_name"
+                  label="First name"
+                  autoComplete="first_name"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("first_name")}
+                  error={!!!!touched.first_name && !!errors.first_name}
+                  helperText={touched.first_name && errors.first_name}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                  id="last_name"
+                  label="Last name"
+                  autoComplete="last_name"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("last_name")}
+                  error={!!!!touched.last_name && !!errors.last_name}
+                  helperText={touched.last_name && errors.last_name}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
                   id="email"
                   label="Email Address"
                   autoComplete="email"
@@ -125,6 +191,67 @@ export default function Signup() {
                   {...getFieldProps("email")}
                   error={!!!!touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
+                />
+              </Grid>
+              <Grid item xs={12} sx={{ display: "flex", gap: "10px" }}>
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                  id="city"
+                  label="City"
+                  autoComplete="city"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("city")}
+                  error={!!!!touched.city && !!errors.city}
+                  helperText={touched.city && errors.city}
+                />
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                  id="state"
+                  label="State"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("state")}
+                  error={!!!!touched.state && !!errors.state}
+                  helperText={touched.state && errors.state}
+                />
+              </Grid>
+              <Grid item xs={12} sx={{ display: "flex", gap: "10px" }}>
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                  id="zip_code"
+                  label="Zip Code"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("zip_code")}
+                  error={!!!!touched.zip_code && !!errors.zip_code}
+                  helperText={touched.zip_code && errors.zip_code}
+                />
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("phone")}
+                  error={!!!!touched.phone && !!errors.phone}
+                  helperText={touched.phone && errors.phone}
                 />
               </Grid>
               <Grid item xs={12}>

@@ -1,5 +1,7 @@
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import FormCheckBox from "./FormCheckBox";
@@ -68,6 +70,15 @@ const Home = () => {
             Here are a few things we need you to complete.
           </Typography>
         </Box>
+        <IconButton
+          disableRipple
+          sx={{
+            background: theme.palette.error.dark,
+            color: theme.palette.grey[100],
+          }}
+        >
+          <LogoutIcon />
+        </IconButton>
       </Box>
       <Box>
         {checkBoxLabels.map((label, i) => (
