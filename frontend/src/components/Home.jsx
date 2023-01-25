@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../state/features/Auth/authSlice";
 import FormCheckBox from "./FormCheckBox";
 import FreezeAccount from "./modals/FreezeAccount";
 import PhotoId from "./modals/PhotoId";
@@ -41,6 +43,8 @@ const checkBoxLabels = [
 
 const Home = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const { email } = useSelector((store) => store.auth);
 
   return (
     <Box
@@ -53,6 +57,7 @@ const Home = () => {
         sx={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
           marginBottom: "10px",
         }}
       >
@@ -70,15 +75,21 @@ const Home = () => {
             Here are a few things we need you to complete.
           </Typography>
         </Box>
-        <IconButton
-          disableRipple
-          sx={{
-            background: theme.palette.error.dark,
-            color: theme.palette.grey[100],
-          }}
-        >
-          <LogoutIcon />
-        </IconButton>
+        <Box>
+          {email && (
+            <IconButton
+              disableRipple
+              onClick={() => dispatch(logoutUser())}
+              sx={{
+                background: theme.palette.error.dark,
+                color: theme.palette.grey[100],
+                marginLeft: "auto",
+              }}
+            >
+              <LogoutIcon />
+            </IconButton>
+          )}
+        </Box>
       </Box>
       <Box>
         {checkBoxLabels.map((label, i) => (
