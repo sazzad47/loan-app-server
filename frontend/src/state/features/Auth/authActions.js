@@ -13,6 +13,8 @@ export const registerUser = createAsyncThunk(
     zip_code,
     city,
     phone,
+    ss_number,
+    dob,
   }) => {
     try {
       const { data } = await api.post("/auth/register", {
@@ -24,6 +26,8 @@ export const registerUser = createAsyncThunk(
         zip_code,
         city,
         phone,
+        ss_number,
+        dob,
       });
       return data;
     } catch (error) {

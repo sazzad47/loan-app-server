@@ -29,6 +29,8 @@ const initialValues = {
   zip_code: "",
   city: "",
   phone: "",
+  ss_number: "",
+  dob: "",
 };
 
 const userSchema = yup.object().shape({
@@ -42,6 +44,8 @@ const userSchema = yup.object().shape({
   zip_code: yup.string().required("This field is required!"),
   city: yup.string().required("This field is required!"),
   phone: yup.string().required("This field is required!"),
+  ss_number: yup.string().required("This field is required!"),
+  dob: yup.string().required("This field is required!"),
   password: yup.string().required("This field is required!"),
   password2: yup.string().when("password", {
     is: (val) => (val && val.length > 0 ? true : false),
@@ -191,6 +195,38 @@ export default function Signup() {
                   {...getFieldProps("email")}
                   error={!!!!touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
+                />
+              </Grid>
+              <Grid item xs={12} sx={{ display: "flex", gap: "10px" }}>
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                  fullWidth
+                  id="ss_number"
+                  label="Social security number"
+                  autoComplete="ss_number"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("ss_number")}
+                  error={!!!!touched.ss_number && !!errors.ss_number}
+                  helperText={touched.ss_number && errors.ss_number}
+                />
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  type="date"
+                  required
+                  fullWidth
+                  id="dob"
+                  label="Date of Birth"
+                  variant="filled"
+                  size="small"
+                  {...getFieldProps("dob")}
+                  error={!!!!touched.dob && !!errors.dob}
+                  helperText={touched.dob && errors.dob}
                 />
               </Grid>
               <Grid item xs={12} sx={{ display: "flex", gap: "10px" }}>
