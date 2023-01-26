@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
+      teletrack_freeze: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       positive_account: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
