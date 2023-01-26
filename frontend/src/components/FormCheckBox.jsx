@@ -23,6 +23,8 @@ const FormCheckBox = ({ label }) => {
   useEffect(() => {
     if (checkRef) {
       onChange();
+    } else {
+      setCheck(false);
     }
   }, [checkRef]);
 

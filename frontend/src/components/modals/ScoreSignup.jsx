@@ -47,6 +47,10 @@ const ScoreSignup = (props, ref) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useImperativeHandle(
     ref,
     () => {
@@ -54,15 +58,12 @@ const ScoreSignup = (props, ref) => {
         open() {
           setOpen(true);
         },
+
         checked,
       };
     },
     [checked]
   );
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     if (email) {

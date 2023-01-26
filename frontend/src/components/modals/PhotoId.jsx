@@ -5,7 +5,12 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProofID from "../../assets/proof_id.png";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
@@ -27,8 +32,6 @@ const PhotoId = (props, ref) => {
   } = useSelector((store) => store.docs);
   const { email } = useSelector((store) => store.auth);
 
-  console.log(typeof file);
-
   useImperativeHandle(
     ref,
     () => {
@@ -36,7 +39,7 @@ const PhotoId = (props, ref) => {
         open() {
           setOpen(true);
         },
-        checked: checked,
+        checked,
       };
     },
     [checked]
@@ -50,6 +53,14 @@ const PhotoId = (props, ref) => {
     const selectedFile = event.target.files[0];
     setPhotoID(selectedFile);
   };
+
+  useEffect(() => {
+    if (photo_ID) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, [photo_ID]);
 
   return (
     <div>
