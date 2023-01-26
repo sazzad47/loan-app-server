@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class Dispute extends Sequelize.Model {}
   Dispute.init(
     {
-      email: {
-        type: Sequelize.STRING,
+      user_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       id: {
@@ -14,14 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       credit_report: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      letter_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      letter_type: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -40,20 +32,33 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: false,
       },
-      experian_letter: {
-        type: Sequelize.BOOLEAN,
-        allowNull: true,
-        defaultValue: false,
+      reason: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
-      trans_union: {
-        type: Sequelize.BOOLEAN,
+      credit_furnisher: {
+        type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: false,
+      },
+      instruction: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      experian_letter: {
+        type: Sequelize.TEXT("long"),
+        allowNull: true,
+      },
+      trans_union_letter: {
+        type: Sequelize.TEXT("long"),
+        allowNull: true,
       },
       equifax_letter: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.TEXT("long"),
         allowNull: true,
-        defaultValue: false,
+      },
+      letter_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
     },
     { sequelize }

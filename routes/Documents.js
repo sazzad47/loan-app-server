@@ -33,6 +33,7 @@ router.post(
     const consumer_office_freeze = req.body.consumer_office_freeze;
     const lexis_nexis_freeze = req.body.lexis_nexis_freeze;
     const positive_account = req.body.positive_account;
+    const teletrack_freeze = req.body.teletrack_freeze;
     try {
       // const newDocs = await Documents.create(req.body);
 
@@ -44,6 +45,7 @@ router.post(
         consumer_office_freeze: consumer_office_freeze,
         lexis_nexis_freeze: lexis_nexis_freeze,
         positive_account: positive_account,
+        teletrack_freeze: teletrack_freeze,
       });
       res
         .status(201)

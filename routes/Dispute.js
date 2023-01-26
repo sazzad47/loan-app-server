@@ -3,71 +3,96 @@ const { sequelize, Dispute } = require("../models");
 const path = require("path");
 
 var multer = require("multer");
+const { InstanceError } = require("sequelize");
 var upload = multer({ dest: "uploads/" });
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "credit_report/");
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     console.log(file);
-    const username = req.body.email;
-    cb(null, username + "-" + Date.now() + "-" + file.originalname);
+    const user = req.body.user_id;
+    cb(null, user + "-" + Date.now() + "-" + file.originalname);
   },
 });
 
 var upload = multer({ storage: storage });
 
 // NEW DISPUTE
-router.post(
-  "/",
-  // (req, res, next) => {
-  //   if (!req.body.email) {
-  //     return res.status(400).send({ error: "email is required" });
-  //   }
-  //   next();
-  // },
-  upload.single("credit_report"),
-  async (req, res) => {
-    const credit_report = req.file.path;
-    const letter_type = req.body.letter_type;
-    const email = req.body.email;
-    const equifax = req.body.equifax;
-    const experian = req.body.experian;
-    const trans_union = req.body.trans_union;
-    const letter_name = req.body.letter_name;
-    try {
-      // const newDocs = await Documents.create(req.body);
+router.post("/", upload.single("credit_report"), async (req, res) => {
+  // const admin = req.body.admin;
+  // console.log(admin);
+  // if (admin != "admin@gmail.com") {
+  //   res.status(401).json("Unauthorized!");
+  // }
 
-      const newDispute = await Dispute.create({
-        email: email,
-        credit_report: credit_report,
-        letter_name: letter_name,
-        letter_type: letter_type,
-        equifax: equifax,
-        trans_union: trans_union,
-        experian: experian,
-      });
-      res
-        .status(201)
-        .json({ meassage: "Document created successfully", newDispute });
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  const user_id = req.body.user_id;
+  const credit_report = req.file.path;
+  const equifax = req.body.equifax;
+  const trans_union = req.body.trans_union;
+  const experian = req.body.experian;
+  const reason = req.body.reason;
+  const credit_furnisher = req.body.credit_furnisher;
+  const instruction = req.body.instruction;
+  const letter_name = req.body.letter_name;
+  if (req.body.experian_letter === "") {
+    experian_letter = "";
+  } else {
+    experian_letter = req.body.experian_letter;
   }
-);
+
+  if (req.body.trans_union_letter === "") {
+    trans_union_letter = "";
+  } else {
+    trans_union_letter = req.body.trans_union_letter;
+  }
+
+  if (req.body.equifax_letter === "") {
+    equifax_letter = "";
+  } else {
+    equifax_letter = req.body.equifax_letter;
+  }
+
+  try {
+    // const newDocs = await Documents.create(req.body);
+    const newDispute = await Dispute.create({
+      user_id: parseInt(user_id),
+      credit_report: credit_report,
+      equifax: equifax,
+      trans_union: trans_union,
+      experian: experian,
+      reason: reason,
+      credit_furnisher: credit_furnisher,
+      instruction: instruction,
+      letter_name: letter_name,
+      experian_letter: experian_letter,
+      trans_union_letter: trans_union_letter,
+      equifax_letter: equifax_letter,
+    });
+    res
+      .status(201)
+      .json({ meassage: "Document created successfully", newDispute });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //GET ALL DISPUTES
 router.get("/", async (req, res) => {
   const email = req.query.email;
+  console.log(admin);
+  if (admin != "admin@gmail.com") {
+    res.status(401).json("Unauthorized!");
+  }
   try {
-    let docs;
+    let disputess;
     if (email) {
-      docs = await Documents.findAll({ where: { email } });
+      docs = await Dispute.findAll({ where: { email } });
     } else {
-      docs = await Documents.findAll();
+      docs = await Dispute.findAll();
     }
-    res.status(200).json(docs);
+    res.status(200).json(disputess);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -75,8 +100,11 @@ router.get("/", async (req, res) => {
 
 //GET SPECIFIC DISPUTE
 router.get("/:id", async (req, res) => {
+  if (admin != "admin@gmail.com") {
+    res.status(401).json("Unauthorized!");
+  }
   try {
-    const doc = await Documents.findOne(req.params.id);
+    const doc = await Dispute.findOne(req.params.id);
     res.status(200).json(doc);
   } catch (err) {
     res.status(500).json(err);
@@ -86,6 +114,9 @@ router.get("/:id", async (req, res) => {
 // UPDATE DISPUTE
 router.put("/:id", async (req, res) => {
   const email = req.body.email;
+  if (admin != "admin@gmail.com") {
+    res.status(401).json("Unauthorized!");
+  }
   const doc = await Documents.findOne(req.params.id);
   if (email === post.email) {
     try {
