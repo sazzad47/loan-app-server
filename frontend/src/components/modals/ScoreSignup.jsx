@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -7,7 +6,13 @@ import Link from "@mui/material/Link";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { useSelector } from "react-redux";
 import StepperButtons from "../utils/StepperButtons";
 import GetStarted from "./scoresignup/GetStarted";
 import Signin from "./scoresignup/Signin";
@@ -17,9 +22,11 @@ const steps = ["Let's get you started", "Create an account", "Login"];
 
 const ScoreSignup = (props, ref) => {
   const [open, setOpen] = useState(false);
-  const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(1);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [checked, setChecked] = React.useState(false);
+
+  const { email } = useSelector((store) => store.auth);
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -40,15 +47,30 @@ const ScoreSignup = (props, ref) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  useImperativeHandle(ref, () => ({
-    open() {
-      setOpen(true);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        open() {
+          setOpen(true);
+        },
+        checked,
+      };
     },
-  }));
+    [checked]
+  );
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (email) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, [email]);
 
   return (
     <div>

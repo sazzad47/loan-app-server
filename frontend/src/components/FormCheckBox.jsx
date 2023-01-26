@@ -4,14 +4,27 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import React, { cloneElement, useRef } from "react";
+import React, { cloneElement, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 const FormCheckBox = ({ label }) => {
   const theme = useTheme();
   const ref = useRef(null);
+  const [check, setCheck] = useState(false);
 
   const { email } = useSelector((store) => store.auth);
+
+  const checkRef = ref.current?.checked;
+
+  const onChange = () => {
+    setCheck((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (checkRef) {
+      onChange();
+    }
+  }, [checkRef]);
 
   return (
     <>
@@ -23,7 +36,9 @@ const FormCheckBox = ({ label }) => {
           }}
         >
           <FormControlLabel
-            control={<Checkbox name="check-box" />}
+            control={
+              <Checkbox checked={check} onChange={onChange} name="check-box" />
+            }
             sx={{
               "& .MuiFormControlLabel-label": {
                 fontSize: "14px",
@@ -40,7 +55,7 @@ const FormCheckBox = ({ label }) => {
               !email &&
               label.label !==
                 "Signup for Credit Hero Score and Share Login Details"
-                 ? "default"
+                ? "default"
                 : "primary"
             }
             component={Button}
