@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { TextField, Autocomplete, Button, Stack } from '@mui/material';
+import AddUserModal from './AddUserModal';
 
 const UsersSelect = ({ value, setSelectedUser }) => {
     const [users, setUsers] = useState([]);
+    const [open, setOpen] = useState(false);
+
+    const handleModalOpen = () => setOpen(true);
+    const handleModalClose = () => setOpen(false);
 
     useEffect(() => {
         const url = 'http://localhost:5000/user';
@@ -40,8 +45,12 @@ const UsersSelect = ({ value, setSelectedUser }) => {
                         setSelectedUser(newValue);
                     }}
                 />
-                <Button variant="contained" color="primary"> Add User</Button>
+                <Button variant="contained" color="primary" onClick={handleModalOpen}> Add User</Button>
             </Stack>
+
+            <>
+                <AddUserModal open={open} handleClose={handleModalClose} />
+            </>
         </div>
     );
 };

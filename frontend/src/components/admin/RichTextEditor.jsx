@@ -12,6 +12,13 @@ const RichTextEditor = ({ data }) => {
         for(let str of data.split(/\r?\n/)) {
             newString += "<p>" + str + "</p>";
         }
+
+        // interpolate the string
+        const values = {
+            client_first_name: 'James', 
+            client_last_name: 'Muhoro'
+        }
+        newString =  interpolateString(newString, values);
         setText(newString);
     }, [data]);
 
@@ -51,3 +58,11 @@ const RichTextEditor = ({ data }) => {
 };
 
 export default RichTextEditor;
+
+function interpolateString(str, values) {
+    for(let key in values) {
+        str = str.replaceAll(`{${key}}`, values[key]);
+    }
+
+    return str;
+}

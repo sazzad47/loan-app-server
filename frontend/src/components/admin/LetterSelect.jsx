@@ -11,7 +11,6 @@ const LetterSelect = ({ value, setSelectedLetter }) => {
             header: true,
             complete: function (results) {
                 setTemplates(results.data);
-                console.log(results.data);
             },
         });
     }, []);
