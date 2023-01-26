@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
+import Tooltip from "@mui/material/Tooltip";
 import React, { cloneElement, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -52,31 +53,44 @@ const FormCheckBox = ({ label }) => {
             }}
             label={label.label}
           />
-          <Chip
-            color={
-              !email &&
-              label.label !==
-                "Signup for Credit Hero Score and Share Login Details"
-                ? "default"
-                : "primary"
-            }
-            component={Button}
-            disabled={
-              !email &&
-              label.label !==
-                "Signup for Credit Hero Score and Share Login Details"
-            }
-            disableRipple
-            onClick={() => ref.current?.open()}
-            size="small"
-            label="Complete now"
-            sx={{
-              textTransform: "none",
-              ":hover": {
-                background: theme.palette.primary.light,
+          <Tooltip
+            title="Mark complete when done"
+            placement="right"
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  background: theme.palette.grey[200],
+                  color: theme.palette.grey[600],
+                },
               },
             }}
-          />
+          >
+            <Chip
+              color={
+                !email &&
+                label.label !==
+                  "Signup for Credit Hero Score and Share Login Details"
+                  ? "default"
+                  : "primary"
+              }
+              component={Button}
+              disabled={
+                !email &&
+                label.label !==
+                  "Signup for Credit Hero Score and Share Login Details"
+              }
+              disableRipple
+              onClick={() => ref.current?.open()}
+              size="small"
+              label="Complete now"
+              sx={{
+                textTransform: "none",
+                ":hover": {
+                  background: theme.palette.primary.light,
+                },
+              }}
+            />
+          </Tooltip>
           {cloneElement(label.dialog, { ref })}
         </Box>
       </FormGroup>

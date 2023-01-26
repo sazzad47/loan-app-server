@@ -9,14 +9,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 
-const providers = [
-  "CreditHeroScore",
-  "IdentifyIQ",
-  "SmartCredit",
-  "MyFreeScoreNow",
-  "MyScoreIQ",
-  "PrivacyGuard",
-];
+const providers = ["IdentifyIQ", "SmartCredit"];
 
 const Settings = () => {
   const [showPassword, setShowPassword] = useState(false);
