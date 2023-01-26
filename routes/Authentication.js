@@ -20,6 +20,8 @@ router.post("/register", async (req, res) => {
       zip_code: req.body.zip_code,
       city: req.body.city,
       phone: req.body.phone,
+      dob: req.body.dob,
+      ss_number: req.body.ss_number,
     });
     return res.status(201).json({ msg: "user saved successfully", newUser });
   } catch (err) {
