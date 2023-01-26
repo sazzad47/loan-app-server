@@ -72,6 +72,7 @@ const Admin = () => {
         setEquifax(false);
         setEquifax(false);
         setTransUnion(false);
+        setReason('');
     }
 
     const handleFileChange = e => {
@@ -128,7 +129,7 @@ const Admin = () => {
                     <br />
                 </div>
                 <>
-                    {creditReport ? (
+                    {(creditReport && selectedUser) ? (
                         <div>
                             <h1>
                                 Letter Wizard <span>(Aboubakar Camara)</span>
@@ -265,9 +266,9 @@ const Admin = () => {
                                                 </TableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        <TableCell></TableCell>
-                                                        <TableCell></TableCell>
-                                                        <TableCell></TableCell>
+                                                        <TableCell>{furnisher}</TableCell>
+                                                        <TableCell>Equifax, Exparian, Transunion</TableCell>
+                                                        <TableCell>{reason}</TableCell>
                                                         <TableCell>
                                                           {equifax && <NegativeDisplay />}
                                                         </TableCell>
@@ -308,7 +309,7 @@ const Admin = () => {
                                 setSelectedLetter={setSelectedLetter}
                             />
                             {selectedLetter && (
-                                <RichTextEditor data={selectedLetter.letter} />
+                                <RichTextEditor data={selectedLetter.letter} selectedUser={selectedUser} />
                             )}
 
                             {/* <Button onClick={handleOpen}>Open modal</Button> */}

@@ -3,8 +3,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Papa from 'papaparse';
 import { csv } from '../../letters-data';
+import { monthsLookup } from '../lookups/months';
 
-const RichTextEditor = ({ data }) => {
+const RichTextEditor = ({ data, selectedUser }) => {
     const [text, setText] = useState();
 
     useEffect(() => {
@@ -15,9 +16,29 @@ const RichTextEditor = ({ data }) => {
 
         // interpolate the string
         const values = {
-            client_first_name: 'James', 
-            client_last_name: 'Muhoro'
+            client_first_name: selectedUser.first_name, 
+            client_last_name: selectedUser.last_name,
+            client_address: `${selectedUser.city}, ${selectedUser.zip_code}`,
+            ss_number: selectedUser.ss_number,
+            bdate: selectedUser.dob,
+            client_signature: `
+                <sapn style="font-style: italic;; font-weight: bold;">
+                    ${selectedUser.first_name} ${selectedUser.last_name}
+                </sapn>
+            `,
+            bureau_address: `
+                <div style="margin-top: 4px; margin-bottom: 4px">
+                    <p>Equifax Information Services LLC</p>
+                    <p>P.O Box 740256</p>
+                    <p>Atlanta, GA 30374-0258</p>
+                </div>
+            `,
+            curr_date: `
+                <p style="margin-top: 3px; margin-bottom: 3px;">${new Date().getDate()} ${monthsLookup[new Date().getMonth()]}, ${new Date().getFullYear()}</p>
+            `
         }
+        
+        console.log('Selected', values);
         newString =  interpolateString(newString, values);
         setText(newString);
     }, [data]);

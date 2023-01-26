@@ -29,11 +29,11 @@ const UsersSelect = ({ value, setSelectedUser }) => {
                     disablePortal
                     id="combo-box-demo"
                     options={users}
-                    getOptionLabel={option => option['email']}
+                    getOptionLabel={option => `${option['first_name']} ${option['last_name']}`}
                     size="small"
                     renderOption={(props, option) => (
                         <li {...props} key={option.id}>
-                            {option.email}
+                            {`${option.first_name} ${option.last_name}`}
                         </li>
                     )}
                     sx={{ width: 300, mb: 2, marginTop: '12px'}}

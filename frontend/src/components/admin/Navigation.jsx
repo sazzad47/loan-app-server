@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Typography, Button, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Navigation = () => {
@@ -19,10 +19,14 @@ const Navigation = () => {
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1 }}
+                        sx={{ fontWeight: '700', border: '1px solid white', p: 0.5, borderRadius: 1  }}
                     >
                         Generate Letter
                     </Typography>
+
+                    
+                    <Button variant='text' sx={{color: '#f0f0f0', ml: 2}}>Users</Button>
+                    <Button variant='text' sx={{color: '#f0f0f0', ml: 2}}>Disputes</Button>
                 </Toolbar>
             </AppBar>
         </Box>
