@@ -80,6 +80,8 @@ export default function Signup() {
         zip_code,
         city,
         phone,
+        ss_number,
+        dob,
       } = values;
       dispatch(
         registerUser({
@@ -91,6 +93,8 @@ export default function Signup() {
           zip_code,
           city,
           phone,
+          ss_number,
+          dob,
         })
       );
     },
