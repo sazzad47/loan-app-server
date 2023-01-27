@@ -9,7 +9,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import AddIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 import FormGroup from '@mui/material/FormGroup';
 import Checkbox from '@mui/material/Checkbox';
 import Stack from '@mui/material/Stack';
@@ -31,6 +31,7 @@ import UsersSelect from './components/admin/UserSelect';
 import LetterSelect from './components/admin/LetterSelect';
 import Paper from '@mui/material/Paper';
 import Navigation from './components/admin/Navigation';
+import { useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -45,6 +46,7 @@ const style = {
 };
 
 const Admin = () => {
+    const routeNavigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -52,6 +54,8 @@ const Admin = () => {
     const [account_no, setAccount_no] = React.useState('');
     const [creditReport, setCreditReport] = React.useState();
     const [selectedUser, setSelectedUser] = React.useState(null);
+
+    const [createLoading, setCreateLoading] = React.useState(false);
 
     const [equifax, setEquifax] = React.useState(false);
     const [experian, setExperian] = React.useState(false);
@@ -70,10 +74,12 @@ const Admin = () => {
     const handleDeleteDispute = () => {
         setIsDisputeAdded(false);
         setEquifax(false);
-        setEquifax(false);
+        setExperian(false);
         setTransUnion(false);
         setReason('');
-    }
+        setInstruction('');
+        setFurnisher('');
+    };
 
     const handleFileChange = e => {
         if (e.target.files) {
@@ -94,6 +100,66 @@ const Admin = () => {
 
         setIsDisputeAdded(true);
         setOpen(false);
+    };
+
+    const saveDispute = letters => {
+        const url = 'http://localhost:5000/dispute';
+        const formData = new FormData();
+        formData.append('user_id', selectedUser.id);
+        formData.append('credit_report', creditReport);
+
+        formData.append('reason', reason);
+        formData.append('credit_furnisher', furnisher);
+        formData.append('instruction', instruction);
+
+        formData.append('equifax', equifax);
+        formData.append('trans_union', transUnion);
+        formData.append('experian', experian);
+
+        formData.append('experian_letter', letters['experianLetter']);
+        formData.append('equifax_letter', letters['equifaxLetter']);
+        formData.append('trans_union_letter', letters['transUnionLetter']);
+
+        formData.append('letter_name', selectedLetter['Category Name']);
+
+
+
+
+        
+        const payload = {
+            user_id: selectedUser.id,
+            credit_report: creditReport,
+
+            reason: reason,
+            credit_furnisher: furnisher,
+            instruction: instruction,
+
+            equifax: equifax,
+            trans_union: transUnion,
+            experian: experian,
+
+            experian_letter: letters['experianLetter'],
+            equifax_letter: letters['equifaxLetter'],
+            trans_union_letter: letters['transUnionLetter'],
+
+            letter_name: selectedLetter['Category Name'],
+        };
+        setCreateLoading(true);
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            // headers: {
+            //     'Content-Type': 'multipart/form-data',
+            // },
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCreateLoading(false);
+                routeNavigate('/admin/disputes');
+            })
+            .catch(err => {
+                setCreateLoading(false);
+            });
     };
 
     return (
@@ -129,10 +195,11 @@ const Admin = () => {
                     <br />
                 </div>
                 <>
-                    {(creditReport && selectedUser) ? (
+                    {creditReport && selectedUser ? (
                         <div>
                             <h1>
-                                Letter Wizard <span>(Aboubakar Camara)</span>
+                                Letter Wizard -{' '}
+                                <span>{`${selectedUser.first_name} ${selectedUser.last_name}`}</span>
                             </h1>
                             <p>
                                 This is where you select items to dispute so you
@@ -266,20 +333,37 @@ const Admin = () => {
                                                 </TableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        <TableCell>{furnisher}</TableCell>
-                                                        <TableCell>Equifax, Exparian, Transunion</TableCell>
-                                                        <TableCell>{reason}</TableCell>
                                                         <TableCell>
-                                                          {equifax && <NegativeDisplay />}
+                                                            {furnisher}
                                                         </TableCell>
                                                         <TableCell>
-                                                            {experian && <NegativeDisplay />}
+                                                            Equifax, Exparian,
+                                                            Transunion
                                                         </TableCell>
                                                         <TableCell>
-                                                          {transUnion && <NegativeDisplay />}
+                                                            {reason}
                                                         </TableCell>
                                                         <TableCell>
-                                                            <IconButton onClick={handleDeleteDispute}>
+                                                            {equifax && (
+                                                                <NegativeDisplay />
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {experian && (
+                                                                <NegativeDisplay />
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {transUnion && (
+                                                                <NegativeDisplay />
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <IconButton
+                                                                onClick={
+                                                                    handleDeleteDispute
+                                                                }
+                                                            >
                                                                 <DeleteIcon
                                                                     color="primary"
                                                                     fontSize="large"
@@ -304,12 +388,24 @@ const Admin = () => {
                                 </div>
                             </div>
 
-                            <LetterSelect
-                                value={selectedLetter}
-                                setSelectedLetter={setSelectedLetter}
-                            />
-                            {selectedLetter && (
-                                <RichTextEditor data={selectedLetter.letter} selectedUser={selectedUser} />
+                            {isDisputeAdded && (
+                                <>
+                                    <LetterSelect
+                                        value={selectedLetter}
+                                        setSelectedLetter={setSelectedLetter}
+                                    />
+                                    {selectedLetter && (
+                                        <RichTextEditor
+                                            data={selectedLetter.letter}
+                                            selectedUser={selectedUser}
+                                            equifax={equifax}
+                                            experian={experian}
+                                            transUnion={transUnion}
+                                            saveDispute={saveDispute}
+                                            createLoading={createLoading}
+                                        />
+                                    )}
+                                </>
                             )}
 
                             {/* <Button onClick={handleOpen}>Open modal</Button> */}
