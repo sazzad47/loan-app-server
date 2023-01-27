@@ -81,17 +81,18 @@ router.post("/", upload.single("credit_report"), async (req, res) => {
 //GET ALL DISPUTES
 router.get("/", async (req, res) => {
   const email = req.query.email;
-  console.log(admin);
-  if (admin != "admin@gmail.com") {
-    res.status(401).json("Unauthorized!");
-  }
+  // console.log(admin);
+  // if (admin != "admin@gmail.com") {
+  //   res.status(401).json("Unauthorized!");
+  // }
   try {
     let disputess;
     if (email) {
-      docs = await Dispute.findAll({ where: { email } });
+      disputess = await Dispute.findAll({ where: { email } });
     } else {
-      docs = await Dispute.findAll();
+      disputess = await Dispute.findAll();
     }
+    console.log(disputess);
     res.status(200).json(disputess);
   } catch (err) {
     res.status(500).json(err);
