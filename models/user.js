@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const { sequelize, Dispute } = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Sequelize.Model {}
@@ -54,5 +55,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     { sequelize }
   );
+  // User.hasMany(Dispute, {
+  //   foreignKey: "user_id",
+  //   as: "user",
+  // });
   return User;
 };

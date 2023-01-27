@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 // GET SPECIFIC USER
 router.get("/:id", async (req, res) => {
   try {
-    const user = await User.findOne({ id: req.params.id });
+    const user = await User.find({ where: { id: req.params.id } });
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);

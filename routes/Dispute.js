@@ -1,9 +1,8 @@
 const router = require("express").Router();
-const { sequelize, Dispute } = require("../models");
+const { sequelize, Dispute, User } = require("../models");
 const path = require("path");
 
 var multer = require("multer");
-const { InstanceError } = require("sequelize");
 var upload = multer({ dest: "uploads/" });
 
 const storage = multer.diskStorage({
@@ -27,7 +26,7 @@ router.post("/", upload.single("credit_report"), async (req, res) => {
   //   res.status(401).json("Unauthorized!");
   // }
 
-  const user_id = req.body.user_id;
+  const email = req.body.email;
   const credit_report = req.file.path;
   const equifax = req.body.equifax;
   const trans_union = req.body.trans_union;
@@ -57,7 +56,7 @@ router.post("/", upload.single("credit_report"), async (req, res) => {
   try {
     // const newDocs = await Documents.create(req.body);
     const newDispute = await Dispute.create({
-      user_id: parseInt(user_id),
+      email: email,
       credit_report: credit_report,
       equifax: equifax,
       trans_union: trans_union,
@@ -91,8 +90,9 @@ router.get("/", async (req, res) => {
       disputess = await Dispute.findAll({ where: { email } });
     } else {
       disputess = await Dispute.findAll();
+      // x = await user.findOne({ where: { id: element.user_id } });
     }
-    console.log(disputess);
+
     res.status(200).json(disputess);
   } catch (err) {
     res.status(500).json(err);

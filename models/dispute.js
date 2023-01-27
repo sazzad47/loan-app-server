@@ -1,11 +1,12 @@
 const Sequelize = require("sequelize");
+const { sequelize, User } = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   class Dispute extends Sequelize.Model {}
   Dispute.init(
     {
-      user_id: {
-        type: Sequelize.INTEGER,
+      email: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       id: {
@@ -63,5 +64,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     { sequelize }
   );
+  // Dispute.belongsTo(User, {
+  //   foreignKey: "user_id",
+  //   as: "user",
+  // });
   return Dispute;
 };
