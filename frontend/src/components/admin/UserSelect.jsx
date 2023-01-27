@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TextField, Autocomplete, Button, Stack } from '@mui/material';
 import AddUserModal from './AddUserModal';
+import { BASE_URL } from '../../config';
 
 const UsersSelect = ({ value, setSelectedUser }) => {
     const [users, setUsers] = useState([]);
@@ -10,7 +11,7 @@ const UsersSelect = ({ value, setSelectedUser }) => {
     const handleModalClose = () => setOpen(false);
 
     useEffect(() => {
-        const url = 'http://localhost:5000/user';
+        const url = BASE_URL + '/user';
         fetch(url)
             .then(res => res.json())
             .then(data => {

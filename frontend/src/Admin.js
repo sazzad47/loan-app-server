@@ -32,6 +32,7 @@ import LetterSelect from './components/admin/LetterSelect';
 import Paper from '@mui/material/Paper';
 import Navigation from './components/admin/Navigation';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from './config';
 
 const style = {
     position: 'absolute',
@@ -103,9 +104,10 @@ const Admin = () => {
     };
 
     const saveDispute = letters => {
-        const url = 'http://localhost:5000/dispute';
+        const url = BASE_URL + '/dispute';
         const formData = new FormData();
-        formData.append('user_id', selectedUser.id);
+        // formData.append('user_id', selectedUser.id);
+        formData.append('email', selectedUser.email);
         formData.append('credit_report', creditReport);
 
         formData.append('reason', reason);

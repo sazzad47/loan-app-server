@@ -14,6 +14,7 @@ import Navigation from './Navigation';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import RichTextModal from './RichTextModal';
+import { BASE_URL } from '../../config';
 
 const DisputesPage = () => {
     const [disputes, setDisputes] = useState([]);
@@ -28,22 +29,33 @@ const DisputesPage = () => {
 
     console.log(content);
 
-    useEffect(() => {
-        const url = 'http://localhost:5000/dispute';
+    // useEffect(async () => {
+    //     const url = BASE_URL + '/dispute';
 
+    //     try {
+    //         const res = await fetch(url);
+    //         const data = await res.json();
+    //     } catch (e) {
+
+    //     }
+    // },[])
+
+    useEffect(() => {
+        const url = BASE_URL + '/dispute';
         setLoading(true);
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                setLoading(false);
+                setLoading(false)
+                setError(false);
                 setDisputes(data);
-                console.log(data);
-            })
-            .catch(err => {
+            }).catch(err => {
+                console.log(err);
                 setLoading(false);
                 setError(true);
             });
     }, []);
+
     return (
         <>
             <>
@@ -54,7 +66,6 @@ const DisputesPage = () => {
                     <Table sx={{ minWidth: 1050 }}>
                         <TableHead sx={{ backgroundColor: 'whitesmoke' }}>
                             <TableRow>
-                                <TableCell>Users Name</TableCell>
                                 <TableCell>Email</TableCell>
                                 <TableCell>Reason</TableCell>
                                 <TableCell>Credit Furnisher</TableCell>
@@ -87,10 +98,7 @@ const DisputesPage = () => {
                                 disputes?.map(dispute => (
                                     <TableRow>
                                         <TableCell>
-                                            Wilberforce Oyando
-                                        </TableCell>
-                                        <TableCell>
-                                            oyandowilber99@gmail.com
+                                            {dispute.email}
                                         </TableCell>
                                         <TableCell>{dispute.reason}</TableCell>
                                         <TableCell>
@@ -156,7 +164,9 @@ const DisputesPage = () => {
                                         <TableCell>
                                             <Button
                                                 onClick={() => {
-                                                    if(dispute.experian_letter) {
+                                                    if (
+                                                        dispute.experian_letter
+                                                    ) {
                                                         setContent(
                                                             dispute.experian_letter
                                                         );
@@ -172,7 +182,9 @@ const DisputesPage = () => {
                                         <TableCell>
                                             <Button
                                                 onClick={() => {
-                                                    if(dispute.trans_union_letter) {
+                                                    if (
+                                                        dispute.trans_union_letter
+                                                    ) {
                                                         setContent(
                                                             dispute.trans_union_letter
                                                         );

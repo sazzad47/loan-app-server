@@ -23,7 +23,8 @@ const modalStyle = {
     transform: 'translate(-50%, -50%)',
     overflow:'scroll',
     height:'100%',
-    display:'block'
+    display:'block',
+    width: 1050,
 };
 
 const RichTextModal = ({ open, handleClose, content }) => {

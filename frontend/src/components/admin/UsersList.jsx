@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Navigation from './Navigation';
+import { BASE_URL } from '../../config';
 
 const UsersList = () => {
     const [users, setUsers] = useState([]);
@@ -17,7 +18,7 @@ const UsersList = () => {
     const [fetchError, setFetchError] = useState(false);
 
     useEffect(() => {
-        const url = 'http://localhost:5000/user';
+        const url = BASE_URL + '/user';;
         setLoading(true);
         fetch(url)
             .then(res => res.json())
