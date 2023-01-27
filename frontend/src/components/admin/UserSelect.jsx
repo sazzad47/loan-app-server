@@ -45,7 +45,7 @@ const UsersSelect = ({ value, setSelectedUser }) => {
                         setSelectedUser(newValue);
                     }}
                 />
-                <Button variant="contained" color="primary" onClick={handleModalOpen}> Add User</Button>
+                {/* <Button variant="contained" color="primary" onClick={handleModalOpen}> Add User</Button> */}
             </Stack>
 
             <>
