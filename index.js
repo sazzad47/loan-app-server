@@ -16,7 +16,7 @@ app.use("/docs", docsRoute);
 app.use("/dispute", dispRoute);
 
 port = process.env.PORT || "5000";
-app.listen("5000", async () => {
+app.listen("4000", async () => {
   console.log("Server up on http://localhost:5000");
   await sequelize.authenticate();
   // await sequelize.sync({ force: true });
