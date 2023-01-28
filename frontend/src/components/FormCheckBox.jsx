@@ -67,17 +67,13 @@ const FormCheckBox = ({ label }) => {
           >
             <Chip
               color={
-                !email &&
-                label.label !==
-                  "Signup for Credit Hero Score and Share Login Details"
+                !email && label.label !== "Signup and Share Login Details"
                   ? "default"
                   : "primary"
               }
               component={Button}
               disabled={
-                !email &&
-                label.label !==
-                  "Signup for Credit Hero Score and Share Login Details"
+                !email && label.label !== "Signup and Share Login Details"
               }
               disableRipple
               onClick={() => ref.current?.open()}

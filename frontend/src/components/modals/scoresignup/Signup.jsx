@@ -131,9 +131,9 @@ export default function Signup() {
           alignItems: "center",
         }}
       >
-        <Box>
+        {/* <Box>
           <img height={25} src={Logo} alt="logo" />
-        </Box>
+        </Box> */}
         <Typography
           variant="h5"
           textAlign="center"

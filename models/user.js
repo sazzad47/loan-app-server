@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-const { sequelize, Dispute } = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Sequelize.Model {}

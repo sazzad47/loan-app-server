@@ -1,5 +1,4 @@
 const Sequelize = require("sequelize");
-const { sequelize, User } = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
   class Dispute extends Sequelize.Model {}
@@ -14,7 +13,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      credit_report: {
+      equifax_report: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      experian_report: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      transUnion_report: {
         type: Sequelize.STRING,
         allowNull: false,
       },

@@ -16,7 +16,8 @@ import SignAgreement from "./modals/SignAgreement";
 
 const checkBoxLabels = [
   {
-    label: "Signup for Credit Hero Score and Share Login Details",
+    label: "Signup and Share Login Details",
+    // label: "Sign Up / Sign In",
     dialog: <ScoreSignup />,
   },
   {
@@ -44,7 +45,7 @@ const checkBoxLabels = [
 const Home = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { email } = useSelector((store) => store.auth);
+  const { email, first_name, last_name } = useSelector((store) => store.auth);
 
   return (
     <Box
@@ -62,18 +63,34 @@ const Home = () => {
         }}
       >
         <Box sx={{ width: "50%" }}>
-          <Typography
-            variant="h4"
-            color={theme.palette.grey[700]}
-            sx={{
-              fontSize: "1.5rem",
-            }}
-          >
-            Welcome Mike Test
-          </Typography>
-          <Typography variant="body2" color={theme.palette.grey[700]}>
-            Here are a few things we need you to complete.
-          </Typography>
+          {email ? (
+            <>
+              <Typography
+                variant="h4"
+                color={theme.palette.grey[700]}
+                sx={{
+                  fontSize: "1.5rem",
+                }}
+              >
+                Welcome {first_name} {last_name}
+              </Typography>
+              <Typography variant="body2" color={theme.palette.grey[700]}>
+                Here are a few things we need you to complete.
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Typography
+                variant="h4"
+                color={theme.palette.grey[700]}
+                sx={{
+                  fontSize: "1.5rem",
+                }}
+              >
+                Please Sign In
+              </Typography>
+            </>
+          )}
         </Box>
         <Box>
           {email && (

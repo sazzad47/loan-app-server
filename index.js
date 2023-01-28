@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const authRoute = require("./routes/Authentication");
 const userRoute = require("./routes/Users");
 const docsRoute = require("./routes/Documents");
@@ -14,10 +15,11 @@ app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/docs", docsRoute);
 app.use("/dispute", dispRoute);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 port = process.env.PORT || "5000";
-app.listen("5050", async () => {
-  console.log("Server up on http://localhost:4040");
+app.listen("5000", async () => {
+  console.log("Server up on http://localhost:5050");
   await sequelize.authenticate();
   // await sequelize.sync({ force: true });
   // await sequelize.sync();

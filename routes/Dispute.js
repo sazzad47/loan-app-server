@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     console.log(file);
-    const user = req.body.user_id;
+    const user = req.body.email;
     cb(null, user + "-" + Date.now() + "-" + file.originalname);
   },
 });
@@ -19,63 +19,69 @@ const storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 // NEW DISPUTE
-router.post("/", upload.single("credit_report"), async (req, res) => {
-  // const admin = req.body.admin;
-  // console.log(admin);
-  // if (admin != "admin@gmail.com") {
-  //   res.status(401).json("Unauthorized!");
-  // }
+router.post(
+  "/",
+  upload.fields([
+    { name: "equifax_report", maxCount: 1 },
+    { name: "experian_report", maxCount: 1 },
+    { name: "transUnion_report", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    const email = req.body.email;
+    const equifax_report = req.files.equifax_report[0].path;
+    const experian_report = req.files.experian_report[0].path;
+    const transUnion_report = req.files.transUnion_report[0].path;
+    const equifax = req.body.equifax;
+    const trans_union = req.body.trans_union;
+    const experian = req.body.experian;
+    const reason = req.body.reason;
+    const credit_furnisher = req.body.credit_furnisher;
+    const instruction = req.body.instruction;
+    const letter_name = req.body.letter_name;
+    if (req.body.experian_letter === "") {
+      experian_letter = "";
+    } else {
+      experian_letter = req.body.experian_letter;
+    }
 
-  const email = req.body.email;
-  const credit_report = req.file.path;
-  const equifax = req.body.equifax;
-  const trans_union = req.body.trans_union;
-  const experian = req.body.experian;
-  const reason = req.body.reason;
-  const credit_furnisher = req.body.credit_furnisher;
-  const instruction = req.body.instruction;
-  const letter_name = req.body.letter_name;
-  if (req.body.experian_letter === "") {
-    experian_letter = "";
-  } else {
-    experian_letter = req.body.experian_letter;
-  }
+    if (req.body.trans_union_letter === "") {
+      trans_union_letter = "";
+    } else {
+      trans_union_letter = req.body.trans_union_letter;
+    }
 
-  if (req.body.trans_union_letter === "") {
-    trans_union_letter = "";
-  } else {
-    trans_union_letter = req.body.trans_union_letter;
-  }
+    if (req.body.equifax_letter === "") {
+      equifax_letter = "";
+    } else {
+      equifax_letter = req.body.equifax_letter;
+    }
 
-  if (req.body.equifax_letter === "") {
-    equifax_letter = "";
-  } else {
-    equifax_letter = req.body.equifax_letter;
+    try {
+      // const newDocs = await Documents.create(req.body);
+      const newDispute = await Dispute.create({
+        email: email,
+        equifax_report: equifax_report,
+        experian_report: experian_report,
+        transUnion_report: transUnion_report,
+        equifax: equifax,
+        trans_union: trans_union,
+        experian: experian,
+        reason: reason,
+        credit_furnisher: credit_furnisher,
+        instruction: instruction,
+        letter_name: letter_name,
+        experian_letter: experian_letter,
+        trans_union_letter: trans_union_letter,
+        equifax_letter: equifax_letter,
+      });
+      res
+        .status(201)
+        .json({ meassage: "Document created successfully", newDispute });
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
-
-  try {
-    // const newDocs = await Documents.create(req.body);
-    const newDispute = await Dispute.create({
-      email: email,
-      credit_report: credit_report,
-      equifax: equifax,
-      trans_union: trans_union,
-      experian: experian,
-      reason: reason,
-      credit_furnisher: credit_furnisher,
-      instruction: instruction,
-      letter_name: letter_name,
-      experian_letter: experian_letter,
-      trans_union_letter: trans_union_letter,
-      equifax_letter: equifax_letter,
-    });
-    res
-      .status(201)
-      .json({ meassage: "Document created successfully", newDispute });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+);
 
 //GET ALL DISPUTES
 router.get("/", async (req, res) => {
