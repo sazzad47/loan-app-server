@@ -69,7 +69,7 @@ const ListView = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("http://localhost:5000/dispute");
+      const res = await axios.get("http://74.63.223.224:5000/dispute");
       console.log("this are ", res.data);
 
       if (res.data.lenght !== 0) {
