@@ -109,12 +109,12 @@ const DisputesPage = () => {
                 <TableCell>Experian</TableCell>
                 <TableCell>TransUnion</TableCell>
                 <TableCell>Letter Name</TableCell>
-                <TableCell>Equifax Report</TableCell>
-                <TableCell>Experian Report</TableCell>
-                <TableCell>TransUnion Report</TableCell>
                 <TableCell>Equifax Letter</TableCell>
                 <TableCell>Experian Letter</TableCell>
                 <TableCell>TransUnion Letter</TableCell>
+                <TableCell>Equifax Report</TableCell>
+                <TableCell>Experian Report</TableCell>
+                <TableCell>TransUnion Report</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
