@@ -1,20 +1,20 @@
 {
   "development": {
-    "username": "freeodoo",
+    "username": "freeodoo_freeodoo",
     "password": "4QzGy_ji",
     "database": "freeodoo_credit_app",
     "host": "tgiscaleme.com",
     "dialect": "mysql"
   },
   "test": {
-    "username": "freeodoo",
+    "username": "freeodoo_freeodoo",
     "password": "4QzGy_ji",
     "database": "freeodoo_credit_app",
     "host": "tgiscaleme.com",
     "dialect": "mysql"
   },
   "production": {
-    "username": "freeodoo",
+    "username": "freeodoo_freeodoo",
     "password": "4QzGy_ji",
     "database": "freeodoo_credit_app",
     "host": "tgiscaleme.com",
