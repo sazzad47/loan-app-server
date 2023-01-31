@@ -1,9 +1,12 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useTheme } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -14,9 +17,9 @@ import { FormikProvider, useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import Logo from "../../../assets/chslogo.png";
 import { registerUser } from "../../../state/features/Auth/authActions";
 import { clearAuthMessages } from "../../../state/features/Auth/authSlice";
+import { docStateUpdate } from "../../../state/features/docs/docSlice";
 import Spinner from "../../utils/Spinner";
 
 const initialValues = {
@@ -57,6 +60,8 @@ const userSchema = yup.object().shape({
 
 export default function Signup() {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const [signed, setSigned] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [alertState, setAlertState] = React.useState({
     open: false,
@@ -66,6 +71,15 @@ export default function Signup() {
   const { vertical, horizontal, open } = alertState;
 
   const { loading, error, msg } = useSelector((store) => store.auth);
+  const { email } = useSelector((store) => store.auth);
+
+  const {
+    photo_ID,
+    proof_of_address,
+    consumer_office_freeze,
+    lexis_nexis_freeze,
+    positive_account,
+  } = useSelector((store) => store.docs);
 
   const formik = useFormik({
     initialValues,
@@ -112,6 +126,26 @@ export default function Signup() {
     setAlertState({ ...alertState, open: false });
     dispatch(clearAuthMessages());
   };
+
+  const onChange = () => {
+    setSigned((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (signed) {
+      dispatch(
+        docStateUpdate({
+          photo_ID,
+          email,
+          proof_of_address,
+          user_agreement_freeze: signed,
+          consumer_office_freeze,
+          lexis_nexis_freeze,
+          positive_account,
+        })
+      );
+    }
+  });
 
   useEffect(() => {
     if (error) {
@@ -343,8 +377,32 @@ export default function Signup() {
                   helperText={touched.password2 && errors.password2}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  textAlign="center"
+                  variant="h6"
+                  sx={{
+                    fontWeight: 800,
+                    color: theme.palette.grey[800],
+                  }}
+                >
+                  Sign agreement
+                </Typography>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="primary"
+                      name="sign-agreement"
+                      checked={signed}
+                      onChange={onChange}
+                    />
+                  }
+                  label="I agree to terms and conditions."
+                />
+              </Grid>
             </Grid>
             <Button
+              disabled={!signed}
               type="submit"
               fullWidth
               variant="contained"

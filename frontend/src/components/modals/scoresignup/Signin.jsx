@@ -14,7 +14,6 @@ import { FormikProvider, useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
-import Logo from "../../../assets/chslogo.png";
 import { login } from "../../../state/features/Auth/authActions";
 import { clearAuthMessages } from "../../../state/features/Auth/authSlice";
 import Spinner from "../../utils/Spinner";
@@ -35,6 +34,7 @@ const userSchema = yup.object().shape({
 
 export default function Signin() {
   const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
   const [alertState, setAlertState] = React.useState({
     open: false,
@@ -44,6 +44,15 @@ export default function Signin() {
   const { vertical, horizontal, open } = alertState;
 
   const { loading, error, msg } = useSelector((store) => store.auth);
+  const { email } = useSelector((store) => store.auth);
+
+  const {
+    photo_ID,
+    proof_of_address,
+    consumer_office_freeze,
+    lexis_nexis_freeze,
+    positive_account,
+  } = useSelector((store) => store.docs);
 
   const formik = useFormik({
     initialValues,
@@ -154,13 +163,14 @@ export default function Signin() {
                 />
               </Grid>
             </Grid>
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign in
             </Button>
           </Box>
         </FormikProvider>

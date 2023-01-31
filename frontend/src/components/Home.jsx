@@ -12,7 +12,6 @@ import PhotoId from "./modals/PhotoId";
 import PositiveAccount from "./modals/PositiveAccount";
 import ProofAddress from "./modals/ProofAddress";
 import ScoreSignup from "./modals/ScoreSignup";
-import SignAgreement from "./modals/SignAgreement";
 
 const checkBoxLabels = [
   {
@@ -28,10 +27,7 @@ const checkBoxLabels = [
     label: "Upload proof of address",
     dialog: <ProofAddress />,
   },
-  {
-    label: "Sign Agreement",
-    dialog: <SignAgreement />,
-  },
+
   {
     label: "Freeze my account",
     dialog: <FreezeAccount />,

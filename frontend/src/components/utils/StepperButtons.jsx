@@ -2,9 +2,11 @@ import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const StepperButtons = ({ activeStep, handleBack, handleNext, steps }) => {
   const theme = useTheme();
+  const { user_agreement_freeze } = useSelector((store) => store.docs);
   return (
     <Box
       sx={{
@@ -29,7 +31,7 @@ const StepperButtons = ({ activeStep, handleBack, handleNext, steps }) => {
 
       <Button
         onClick={handleNext}
-        disabled={activeStep === steps.length}
+        disabled={activeStep === steps.length || !user_agreement_freeze}
         sx={{
           textTransform: "none",
           background: theme.palette.primary.main,
