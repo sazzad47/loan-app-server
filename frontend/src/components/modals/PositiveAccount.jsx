@@ -17,6 +17,16 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import { submitUploadFiles } from "../../state/features/docs/docActions";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
+import Account1 from "./positiveAccounts/Account1";
+
+const links = [
+  "https://www.boompay.app/boomreport",
+  "https://kikoff.com/",
+  "https://www.self.inc/",
+  "https://www.creditstrong.com/",
+  "experian.com/consumer-products/score-boost.html?pc=sem_exp_google&cc=sem_exp_google_ad_1651407997_65972645920_379826966571_aud-942381786946:kwd-585063777506_e___k_CjwKCAjwpKyYBhB7EiwAU2Hn2c9Xv7mEBBfnOVL7BnMcCnuQU0kqDy3xvCwIhMBmS5ch6yWJL4dHpBoCSLUQAvD_BwE_k_&ref=brand&awsearchcpc=1&gclid=CjwKCAjwpKyYBhB7EiwAU2Hn2c9Xv7mEBBfnOVL7BnMcCnuQU0kqDy3xvCwIhMBmS5ch6yWJL4dHpBoCSLUQAvD_BwE",
+  "https://www.credit.com/extracredit/adv/trackit2?ref_id=0c41a1ae-6540-47b7-9d92-fb6f60c1b97e&end_user_type=MARKET_PLACE&pl=blog&af=32806",
+];
 
 const PositiveAccount = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -157,6 +167,9 @@ const PositiveAccount = (props, ref) => {
                     </ListItemButton>
                   </ListItem>
                 </a>
+                {links.map((link) => (
+                  <Account1 link={link} />
+                ))}
               </List>
             </Box>
             {/* <Button
