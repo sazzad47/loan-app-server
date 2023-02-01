@@ -44,29 +44,29 @@ router.post(
     const experian_account = req.body.experian_account;
     const transUnion_account = req.body.transUnion_account;
 
-    const equifax_d2 = req.body.equifax_d2;
-    const trans_union_d2 = req.body.trans_union_d2;
-    const experian_d2 = req.body.experian_d2;
-    const reason_d2 = req.body.reason_d2;
-    const credit_furnisher_d2 = req.body.credit_furnisher_d2;
-    const instruction_d2 = req.body.instruction_d2;
-    const letter_name_d2 = req.body.letter_name_d2;
-    const account_number_d2 = req.body.account_number_d2;
-    const equifax_account_d2 = req.body.equifax_account_d2;
-    const experian_account_d2 = req.body.experian_account_d2;
-    const transUnion_account_d2 = req.body.transUnion_account_d2;
+    // const equifax_d2 = req.body.equifax_d2;
+    // const trans_union_d2 = req.body.trans_union_d2;
+    // const experian_d2 = req.body.experian_d2;
+    // const reason_d2 = req.body.reason_d2;
+    // const credit_furnisher_d2 = req.body.credit_furnisher_d2;
+    // const instruction_d2 = req.body.instruction_d2;
+    // const letter_name_d2 = req.body.letter_name_d2;
+    // const account_number_d2 = req.body.account_number_d2;
+    // const equifax_account_d2 = req.body.equifax_account_d2;
+    // const experian_account_d2 = req.body.experian_account_d2;
+    // const transUnion_account_d2 = req.body.transUnion_account_d2;
 
-    const equifax_d3 = req.body.equifax_d3;
-    const trans_union_d3 = req.body.trans_union_d3;
-    const experian_d3 = req.body.experian_d3;
-    const reason_d3 = req.body.reason_d3;
-    const credit_furnisher_d3 = req.body.credit_furnisher_d3;
-    const instruction_d3 = req.body.instruction_d3;
-    const letter_name_d3 = req.body.letter_name_d3;
-    const account_number_d3 = req.body.account_number_d3;
-    const equifax_account_d3 = req.body.equifax_account_d3;
-    const experian_account_d3 = req.body.experian_account_d3;
-    const transUnion_account_d3 = req.body.transUnion_account_d3;
+    // const equifax_d3 = req.body.equifax_d3;
+    // const trans_union_d3 = req.body.trans_union_d3;
+    // const experian_d3 = req.body.experian_d3;
+    // const reason_d3 = req.body.reason_d3;
+    // const credit_furnisher_d3 = req.body.credit_furnisher_d3;
+    // const instruction_d3 = req.body.instruction_d3;
+    // const letter_name_d3 = req.body.letter_name_d3;
+    // const account_number_d3 = req.body.account_number_d3;
+    // const equifax_account_d3 = req.body.equifax_account_d3;
+    // const experian_account_d3 = req.body.experian_account_d3;
+    // const transUnion_account_d3 = req.body.transUnion_account_d3;
 
     if (req.body.experian_letter === "") {
       experian_letter = "";
@@ -108,29 +108,29 @@ router.post(
         experian_account: experian_account,
         transUnion_account: transUnion_account,
 
-        equifax_d2: equifax_d2,
-        trans_union_d2: trans_union_d2,
-        experian_d2: experian_d2,
-        reason_d2: reason_d2,
-        credit_furnisher_d2: credit_furnisher_d2,
-        instruction_d2: instruction_d2,
-        letter_name_d2: letter_name_d2,
-        account_number_d2: account_number_d2,
-        equifax_account_d2: equifax_account_d2,
-        experian_account_d2: experian_account_d2,
-        transUnion_account_d2: transUnion_account_d2,
+        // equifax_d2: equifax_d2,
+        // trans_union_d2: trans_union_d2,
+        // experian_d2: experian_d2,
+        // reason_d2: reason_d2,
+        // credit_furnisher_d2: credit_furnisher_d2,
+        // instruction_d2: instruction_d2,
+        // letter_name_d2: letter_name_d2,
+        // account_number_d2: account_number_d2,
+        // equifax_account_d2: equifax_account_d2,
+        // experian_account_d2: experian_account_d2,
+        // transUnion_account_d2: transUnion_account_d2,
 
-        equifax_d3: equifax_d3,
-        trans_union_d3: trans_union_d3,
-        experian_d3: experian_d3,
-        reason_d3: reason_d3,
-        credit_furnisher_d3: credit_furnisher_d3,
-        instruction_d3: instruction_d3,
-        letter_name_d3: letter_name_d3,
-        account_number_d3: account_number_d3,
-        equifax_account_d3: equifax_account_d3,
-        experian_account_d3: experian_account_d3,
-        transUnion_account_d3: transUnion_account_d3,
+        // equifax_d3: equifax_d3,
+        // trans_union_d3: trans_union_d3,
+        // experian_d3: experian_d3,
+        // reason_d3: reason_d3,
+        // credit_furnisher_d3: credit_furnisher_d3,
+        // instruction_d3: instruction_d3,
+        // letter_name_d3: letter_name_d3,
+        // account_number_d3: account_number_d3,
+        // equifax_account_d3: equifax_account_d3,
+        // experian_account_d3: experian_account_d3,
+        // transUnion_account_d3: transUnion_account_d3,
       });
       res
         .status(201)
