@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Input from "@mui/material/Input";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import { v4 as uuid } from 'uuid';
 
 import {
   Table,
@@ -51,7 +52,13 @@ const style = {
 const Admin = () => {
   const routeNavigate = useNavigate();
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    if(disputeItems.length < 3) {
+      setOpen(true)
+    } else {
+      alert('Not allowed');
+    }
+  };
   const handleClose = () => setOpen(false);
   const [higher, setHigher] = React.useState(false);
   const [account_no, setAccount_no] = React.useState("");
@@ -59,6 +66,9 @@ const Admin = () => {
   const [experian_report, setExperianReport] = React.useState();
   const [transUnion_report, setTransUnionReport] = React.useState();
   const [selectedUser, setSelectedUser] = React.useState(null);
+
+  const [accounType, setAccountType] = React.useState('account_same');
+  const [disputeItems, setDisputeItems] = React.useState([]);
 
   const [createLoading, setCreateLoading] = React.useState(false);
 
@@ -69,6 +79,10 @@ const Admin = () => {
   const [reason, setReason] = React.useState("");
   const [instruction, setInstruction] = React.useState("");
   const [furnisher, setFurnisher] = React.useState("");
+  const [accountNumber, setAccountNumber] = React.useState('');
+  const [equifaxAccount, setEquifaxAccount] = React.useState('');
+  const [experianAccount, setExperianAccount] = React.useState('');
+  const [transUnionAccount, setTransUnionAccount] = React.useState('');
 
   const [isDisputeAdded, setIsDisputeAdded] = React.useState(false);
 
@@ -76,14 +90,31 @@ const Admin = () => {
 
   const handleChange = () => console.log("first");
 
-  const handleDeleteDispute = () => {
-    setIsDisputeAdded(false);
-    setEquifax(false);
-    setExperian(false);
-    setTransUnion(false);
-    setReason("");
-    setInstruction("");
-    setFurnisher("");
+  const handleDeleteDispute = (id) => {
+
+    let itemIndex;
+    disputeItems.forEach((item, index) => {
+      if(item.id === id) {
+        itemIndex = index;
+      }
+    })
+    
+    if(itemIndex) {
+      console.log('jk')
+      let newItems = disputeItems;
+      newItems.splice(itemIndex, 1);
+      console.log(newItems);
+      setDisputeItems(newItems);
+    }
+
+    
+    // setIsDisputeAdded(false);
+    // setEquifax(false);
+    // setExperian(false);
+    // setTransUnion(false);
+    // setReason("");
+    // setInstruction("");
+    // setFurnisher("");
   };
 
   const handleFileChangeEquifax = (e) => {
@@ -113,9 +144,42 @@ const Admin = () => {
       return;
     }
 
+    const disputeItem = {
+      id: uuid(),
+      equifax: equifax,
+      experian: experian,
+      transUnion: transUnion,
+      reason: reason,
+      instruction: instruction,
+      furnisher: furnisher,
+      sameAccount: accounType === 'account_same',
+      accountNumber: accountNumber,
+      equifaxAccount: equifaxAccount,
+      experianAccount: experianAccount,
+      transUnionAccount: transUnionAccount
+    };
+
+    console.log(disputeItem);
+
+    setDisputeItems([...disputeItems, disputeItem]);
     setIsDisputeAdded(true);
     setOpen(false);
+    resetDisputeModal();
   };
+
+  function resetDisputeModal() {
+    setEquifax(false);
+    setExperian(false);
+    setTransUnion(false);
+    setReason('');
+    setInstruction('');
+    setFurnisher('');
+    setAccountNumber('');
+    setEquifaxAccount('');
+    setExperianAccount('');
+    setTransUnionAccount('');
+    setAccountType('account_same');
+  }
 
   const saveDispute = (letters) => {
     const url = BASE_URL + "/dispute";
@@ -126,13 +190,53 @@ const Admin = () => {
     formData.append("experian_report", experian_report);
     formData.append("transUnion_report", transUnion_report);
 
-    formData.append("reason", reason);
-    formData.append("credit_furnisher", furnisher);
-    formData.append("instruction", instruction);
+    for(let i = 0; i<disputeItems.length; i++) {
+      const item = disputeItems[i];
+      if(i == 0 ) {
+        formData.append("reason", item.reason);
+        formData.append("credit_furnisher", item.furnisher);
+        formData.append("instruction", item.instruction);
+        
+        formData.append("equifax", item.equifax);
+        formData.append("trans_union", item.transUnion);
+        formData.append("experian", item.experian);
 
-    formData.append("equifax", equifax);
-    formData.append("trans_union", transUnion);
-    formData.append("experian", experian);
+        formData.append('account_number', item.accountNumber);
+        formData.append('equifax_account', item.equifaxAccount);
+        formData.append('experian_account', item.experianAccount);
+        formData.append('transUnion_account', item.transUnionAccount);
+      }
+      if(i === 1) {
+        formData.append(`reason_d2`, item.reason);
+        formData.append(`credit_furnisher_d2`, item.furnisher);
+        formData.append(`instruction_d2`, item.instruction);
+        
+        formData.append(`equifax_d1`, item.equifax);
+        formData.append(`trans_union_d2`, item.transUnion);
+        formData.append(`experian_d1`, item.experian);
+  
+        formData.append(`account_number_d2`, item.accountNumber);
+        formData.append(`equifax_account_d2`, item.equifaxAccount);
+        formData.append(`experian_account_d2`, item.experianAccount);
+        formData.append(`transUnion_account_d2`, item.transUnionAccount);
+
+      }
+      if(i === 2) {
+        formData.append(`reason_d3`, item.reason);
+        formData.append(`credit_furnisher_d3`, item.furnisher);
+        formData.append(`instruction_d3`, item.instruction);
+        
+        formData.append(`equifax_d3`, item.equifax);
+        formData.append(`trans_union_d3`, item.transUnion);
+        formData.append(`experian_d3`, item.experian);
+  
+        formData.append(`account_number_d3`, item.accountNumber);
+        formData.append(`equifax_account_d3`, item.equifaxAccount);
+        formData.append(`experian_account_d3`, item.experianAccount);
+        formData.append(`transUnion_account_d3`, item.transUnionAccount);
+      }
+    }
+
 
     formData.append("experian_letter", letters["experianLetter"]);
     formData.append("equifax_letter", letters["equifaxLetter"]);
@@ -140,42 +244,25 @@ const Admin = () => {
 
     formData.append("letter_name", selectedLetter["Category Name"]);
 
-    const payload = {
-      user_id: selectedUser.id,
-      equifax_report: equifax_report,
-      experian_report: experian_report,
-      transUnion_report: transUnion_report,
-
-      reason: reason,
-      credit_furnisher: furnisher,
-      instruction: instruction,
-
-      equifax: equifax,
-      trans_union: transUnion,
-      experian: experian,
-
-      experian_letter: letters["experianLetter"],
-      equifax_letter: letters["equifaxLetter"],
-      trans_union_letter: letters["transUnionLetter"],
-
-      letter_name: selectedLetter["Category Name"],
-    };
-    setCreateLoading(true);
-    fetch(url, {
-      method: "POST",
-      body: formData,
-      // headers: {
-      //     'Content-Type': 'multipart/form-data',
-      // },
+    formData.forEach((value, key) => {
+      console.log(key, value);
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setCreateLoading(false);
-        routeNavigate("/admin/disputes");
-      })
-      .catch((err) => {
-        setCreateLoading(false);
-      });
+    // setCreateLoading(true);
+    // fetch(url, {
+    //   method: "POST",
+    //   body: formData,
+    //   // headers: {
+    //   //     'Content-Type': 'multipart/form-data',
+    //   // },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setCreateLoading(false);
+    //     routeNavigate("/admin/disputes");
+    //   })
+    //   .catch((err) => {
+    //     setCreateLoading(false);
+    //   });
   };
 
   return (
@@ -334,8 +421,8 @@ const Admin = () => {
                   <h1>Step 2:</h1> <h4> Choose Dispute Items</h4>
                 </div>
                 <div>
-                  {isDisputeAdded ? (
-                    <TableContainer component={Paper}>
+                  {isDisputeAdded && (
+                    <TableContainer component={Paper} sx={{mb: 2}}>
                       <Table sx={{ minWidth: 1050 }}>
                         <TableHead>
                           <TableRow>
@@ -349,7 +436,28 @@ const Admin = () => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          <TableRow>
+                          {React.Children.toArray(disputeItems.map(item => (
+                            <TableRow>
+                              <TableCell>{item.furnisher}</TableCell>
+                              <TableCell>Equifax, Exparian, Transunion</TableCell>
+                              <TableCell>{item.reason}</TableCell>
+                              <TableCell>
+                                {item.equifax && <NegativeDisplay />}
+                              </TableCell>
+                              <TableCell>
+                                {item.experian && <NegativeDisplay />}
+                              </TableCell>
+                              <TableCell>
+                                {item.transUnion && <NegativeDisplay />}
+                              </TableCell>
+                              <TableCell>
+                                <IconButton onClick={() => handleDeleteDispute(item.id)}>
+                                  <DeleteIcon color="primary" fontSize="large" />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          )))}
+                          {/* <TableRow>
                             <TableCell>{furnisher}</TableCell>
                             <TableCell>Equifax, Exparian, Transunion</TableCell>
                             <TableCell>{reason}</TableCell>
@@ -367,11 +475,11 @@ const Admin = () => {
                                 <DeleteIcon color="primary" fontSize="large" />
                               </IconButton>
                             </TableCell>
-                          </TableRow>
+                          </TableRow> */}
                         </TableBody>
                       </Table>
                     </TableContainer>
-                  ) : (
+                  )}
                     <Stack direction="row" spacing={2}>
                       <Button
                         variant="contained"
@@ -381,7 +489,7 @@ const Admin = () => {
                         Add New Dispute Item
                       </Button>
                     </Stack>
-                  )}
+                 
                 </div>
               </div>
 
@@ -473,8 +581,8 @@ const Admin = () => {
                             <RadioGroup
                               aria-labelledby="demo-controlled-radio-buttons-group"
                               name="controlled-radio-buttons-group"
-                              // value={account_no}
-                              // onChange={handleChange}
+                              value={accounType}
+                              onChange={(e) => setAccountType(e.target.value)}
                             >
                               <FormControlLabel
                                 value="account_same"
@@ -490,6 +598,43 @@ const Admin = () => {
                               />
                             </RadioGroup>
                           </FormControl>
+                          <Box>
+                            {accounType === 'account_same' && (
+                              <TextField 
+                                size="small" 
+                                placeholder="Acc no" 
+                                sx={{mb: 1}} 
+                                value={accountNumber}
+                                onChange={(e) => setAccountNumber(e.target.value)}
+                              />
+                            )}
+                            {accounType === 'account_different' && (
+                              <>
+                                <TextField 
+                                  size="small" 
+                                  placeholder="Equifax Acc no" 
+                                  sx={{mb: 1}} 
+                                  value={equifaxAccount}
+                                  onChange={(e) => setEquifaxAccount(e.target.value)
+                                    }
+                                />
+                                <TextField 
+                                  size="small" 
+                                  placeholder="Equifax Acc no" 
+                                  sx={{mb: 1}} 
+                                  value={experianAccount}
+                                  onChange={(e) => setExperianAccount(e.target.value)}
+                                />
+                                <TextField 
+                                  size="small" 
+                                  placeholder="TransUnion Acc no" 
+                                  sx={{mb: 1}}
+                                  value={transUnionAccount}
+                                  onChange={(e) => setTransUnionAccount(e.target.value)}
+                                />
+                              </>
+                            )}
+                          </Box>
                         </div>
                       </div>
 

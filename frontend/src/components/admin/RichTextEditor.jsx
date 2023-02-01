@@ -5,8 +5,8 @@ import { monthsLookup } from '../lookups/months';
 import { Box, Button } from '@mui/material';
 
 const RichTextEditor = props => {
-    const { data, selectedUser, equifax, experian, transUnion, saveDispute, createLoading } = props;
-
+    let { data, selectedUser, equifax, experian, transUnion, saveDispute, createLoading } = props;
+    equifax = true; experian = true; transUnion = true;
     const [text, setText] = useState();
     const [equifaxLetter, setEquifaxLetter] = useState('');
     const [experianLetter, setExperianLetter] = useState('');
@@ -96,6 +96,8 @@ const RichTextEditor = props => {
         // newString = interpolateString(newString, values);
         // setText(newString);
     }, [data]);
+
+    console.log(equifaxLetter);
 
     return (
         <div

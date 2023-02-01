@@ -50,6 +50,7 @@ const LetterSelect = ({ value, setSelectedLetter }) => {
                     size={'small'}
                     value={value}
                     onChange={(e, newValue) => {
+                        console.log(newValue);
                         setSelectedLetter(newValue);
                     }}
                 />
