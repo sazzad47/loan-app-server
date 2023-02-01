@@ -20,8 +20,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 port = process.env.PORT || "5000";
 app.listen("5000", async () => {
   console.log("Server up on http://localhost:5050");
-  // await sequelize.authenticate();
-  await sequelize.sync({ force: true });
+  await sequelize.authenticate();
+  // await sequelize.sync({ force: true });
   // await sequelize.sync();
   console.log("Database Connected!");
 });
