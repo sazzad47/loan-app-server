@@ -181,88 +181,72 @@ const Admin = () => {
     setAccountType('account_same');
   }
 
-  const saveDispute = (letters) => {
+  const saveDispute = async (letters) => {
     const url = BASE_URL + "/dispute";
-    const formData = new FormData();
-    // formData.append('user_id', selectedUser.id);
-    formData.append("email", selectedUser.email);
-    formData.append("equifax_report", equifax_report);
-    formData.append("experian_report", experian_report);
-    formData.append("transUnion_report", transUnion_report);
 
-    for(let i = 0; i<disputeItems.length; i++) {
-      const item = disputeItems[i];
-      if(i == 0 ) {
-        formData.append("reason", item.reason);
-        formData.append("credit_furnisher", item.furnisher);
-        formData.append("instruction", item.instruction);
-        
-        formData.append("equifax", item.equifax);
-        formData.append("trans_union", item.transUnion);
-        formData.append("experian", item.experian);
+    setCreateLoading(true);
 
-        formData.append('account_number', item.accountNumber);
-        formData.append('equifax_account', item.equifaxAccount);
-        formData.append('experian_account', item.experianAccount);
-        formData.append('transUnion_account', item.transUnionAccount);
-      }
-      if(i === 1) {
-        formData.append(`reason_d2`, item.reason);
-        formData.append(`credit_furnisher_d2`, item.furnisher);
-        formData.append(`instruction_d2`, item.instruction);
-        
-        formData.append(`equifax_d1`, item.equifax);
-        formData.append(`trans_union_d2`, item.transUnion);
-        formData.append(`experian_d1`, item.experian);
-  
-        formData.append(`account_number_d2`, item.accountNumber);
-        formData.append(`equifax_account_d2`, item.equifaxAccount);
-        formData.append(`experian_account_d2`, item.experianAccount);
-        formData.append(`transUnion_account_d2`, item.transUnionAccount);
+    for(let dispute of disputeItems) {
+      const formData = new FormData();
 
+      formData.append("email", selectedUser.email);
+
+      // reports
+      formData.append("equifax_report", equifax_report);
+      formData.append("experian_report", experian_report);
+      formData.append("transUnion_report", transUnion_report);
+
+      // info
+      formData.append("reason", dispute.reason);
+      formData.append("credit_furnisher", dispute.furnisher);
+      formData.append("instruction", dispute.instruction);
+
+      formData.append("equifax", dispute.equifax);
+      formData.append("trans_union", dispute.transUnion);
+      formData.append("experian", dispute.experian);
+
+      // account numbers
+      formData.append('account_number', dispute.accountNumber);
+      formData.append('equifax_account', dispute.equifaxAccount);
+      formData.append('experian_account', dispute.experianAccount);
+      formData.append('transUnion_account', dispute.transUnionAccount);
+
+      // letters
+      formData.append("experian_letter", letters["experianLetter"]);
+      formData.append("equifax_letter", letters["equifaxLetter"]);
+      formData.append("trans_union_letter", letters["transUnionLetter"]);
+      formData.append("letter_name", selectedLetter["Category Name"]);
+
+      // persist the dispute
+
+      try {
+        const res = await fetch(url, {method: 'POST', body: formData});
+        const resData = await res.json();
+      }catch(e) {
+        console.log(e);
       }
-      if(i === 2) {
-        formData.append(`reason_d3`, item.reason);
-        formData.append(`credit_furnisher_d3`, item.furnisher);
-        formData.append(`instruction_d3`, item.instruction);
-        
-        formData.append(`equifax_d3`, item.equifax);
-        formData.append(`trans_union_d3`, item.transUnion);
-        formData.append(`experian_d3`, item.experian);
-  
-        formData.append(`account_number_d3`, item.accountNumber);
-        formData.append(`equifax_account_d3`, item.equifaxAccount);
-        formData.append(`experian_account_d3`, item.experianAccount);
-        formData.append(`transUnion_account_d3`, item.transUnionAccount);
-      }
+
     }
 
+    setCreateLoading(false);
+    routeNavigate("/admin/disputes");
 
-    formData.append("experian_letter", letters["experianLetter"]);
-    formData.append("equifax_letter", letters["equifaxLetter"]);
-    formData.append("trans_union_letter", letters["transUnionLetter"]);
-
-    formData.append("letter_name", selectedLetter["Category Name"]);
-
-    // formData.forEach((value, key) => {
-    //   console.log(key, value);
+    // setCreateLoading(true);
+    // fetch(url, {
+    //   method: "POST",
+    //   body: formData,
+    //   // headers: {
+    //   //     'Content-Type': 'multipart/form-data',
+    //   // },
     // })
-    setCreateLoading(true);
-    fetch(url, {
-      method: "POST",
-      body: formData,
-      // headers: {
-      //     'Content-Type': 'multipart/form-data',
-      // },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCreateLoading(false);
-        routeNavigate("/admin/disputes");
-      })
-      .catch((err) => {
-        setCreateLoading(false);
-      });
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setCreateLoading(false);
+    //     routeNavigate("/admin/disputes");
+    //   })
+    //   .catch((err) => {
+    //     setCreateLoading(false);
+    //   });
   };
 
   return (
