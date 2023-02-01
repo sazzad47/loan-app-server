@@ -244,25 +244,25 @@ const Admin = () => {
 
     formData.append("letter_name", selectedLetter["Category Name"]);
 
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    })
-    // setCreateLoading(true);
-    // fetch(url, {
-    //   method: "POST",
-    //   body: formData,
-    //   // headers: {
-    //   //     'Content-Type': 'multipart/form-data',
-    //   // },
+    // formData.forEach((value, key) => {
+    //   console.log(key, value);
     // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setCreateLoading(false);
-    //     routeNavigate("/admin/disputes");
-    //   })
-    //   .catch((err) => {
-    //     setCreateLoading(false);
-    //   });
+    setCreateLoading(true);
+    fetch(url, {
+      method: "POST",
+      body: formData,
+      // headers: {
+      //     'Content-Type': 'multipart/form-data',
+      // },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCreateLoading(false);
+        routeNavigate("/admin/disputes");
+      })
+      .catch((err) => {
+        setCreateLoading(false);
+      });
   };
 
   return (

@@ -105,6 +105,7 @@ const DisputesPage = () => {
                 <TableCell>Reason</TableCell>
                 <TableCell>Credit Furnisher</TableCell>
                 <TableCell>instruction</TableCell>
+                <TableCell>Account</TableCell>
                 <TableCell>Equifax</TableCell>
                 <TableCell>Experian</TableCell>
                 <TableCell>TransUnion</TableCell>
@@ -137,6 +138,11 @@ const DisputesPage = () => {
                     <TableCell>{dispute.reason}</TableCell>
                     <TableCell>{dispute.credit_furnisher}</TableCell>
                     <TableCell>{dispute.instruction}</TableCell>
+                    <TableCell>
+                      {dispute.account_number ? (dispute.account_number) : (
+                        `equifax: ${dispute.equifax_account ? dispute.equifax_account : ''}, equifax: ${dispute.experian_account ? dispute.experian_account : ''}, Trans union: ${dispute.transUnion_account ? dispute.transUnion_account : ''},`
+                      ) }
+                    </TableCell>
                     <TableCell>
                       {dispute.equifax ? (
                         <CheckCircleIcon sx={{ color: "green" }} />
