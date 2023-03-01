@@ -27,14 +27,13 @@ const checkBoxLabels = [
     label: "Upload proof of address",
     dialog: <ProofAddress />,
   },
-
-  {
-    label: "Freeze my account",
-    dialog: <FreezeAccount />,
-  },
   {
     label: "Positive account",
     dialog: <PositiveAccount />,
+  },
+  {
+    label: "Freeze my account",
+    dialog: <FreezeAccount />,
   },
 ];
 

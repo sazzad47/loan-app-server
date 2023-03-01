@@ -198,17 +198,12 @@ router.put("/:id", async (req, res) => {
 
 // DELETE DISPUTE
 router.delete("/:id", async (req, res) => {
-  const user = req.body.email;
-  const doc = await Documents.findOne({ where: { id: req.params.id } });
-  if (user === post.email) {
-    try {
-      await doc.destroy();
-      res.status(200).json("Post Deleted Successfully");
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  } else {
-    res.status(401).json("Unauthorized!");
+  const doc = await Dispute.findOne({ where: { id: req.params.id } });
+  try {
+    await doc.destroy();
+    res.status(200).json("Post Deleted Successfully");
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
