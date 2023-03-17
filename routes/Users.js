@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const { User, sequelize } = require("../models");
+const { User, sequelize, Documents } = require("../models");
 const bcrypt = require("bcrypt");
 
-// GET ALL USERS
+// // GET ALL USERS
 router.get("/", async (req, res) => {
   try {
     const users = await User.findAll();
@@ -15,9 +15,10 @@ router.get("/", async (req, res) => {
 // GET SPECIFIC USER
 router.get("/:id", async (req, res) => {
   try {
-    const user = await User.find({ where: { id: req.params.id } });
+    const user = await User.findAll({ where: { id: req.params.id } });
     res.status(200).json(user);
   } catch (err) {
+    console.log("Hello");
     res.status(500).json(err);
   }
 });
@@ -38,23 +39,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-// router.put("/:id", async (req, res) => {
-//   if (req.params.id === req.body.id) {
-//     if (req.body.password) {
-//       const salt = await bcrypt.genSalt(10);
-//       req.body.password = await bcrypt.hash(req.body.password, salt);
-//     }
-//     try {
-//       const updatedUser = await User.findOne({ where: { id: req.params.id } });
-//       res.status(200).json({ msg: "User Update Success", updatedUser });
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   } else {
-//     res.status(401).json("Unauthorized");
-//   }
-// });
 
 // DELETE USER
 router.delete("/:id", async (req, res) => {

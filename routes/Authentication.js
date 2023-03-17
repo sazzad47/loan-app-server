@@ -2,8 +2,33 @@ const router = require("express").Router();
 const { json } = require("express");
 // const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 
 const { sequelize, User } = require("../models");
+
+router.post("/update-password", async (req, res) => {
+  const { email, newPassword } = req.body;
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    console.log(user);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    const updatedUser = await User.update(
+      { password: hashedPassword },
+      { where: { email } }
+    );
+
+    return res
+      .status(200)
+      .json({ msg: "Password updated successfully", updatedUser });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // REGISTER
 router.post("/register", async (req, res) => {
@@ -45,6 +70,69 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+});
+
+function sendEmail({ recipient_email, OTP }) {
+  return new Promise((resolve, reject) => {
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "wisdomdigitalmarketing21@gmail.com",
+        pass: "Joshie@1025",
+      },
+    });
+
+    const mail_configs = {
+      from: "wisdomdigitalmarketing21@gmail.com",
+      to: recipient_email,
+      subject: "TGIFACTORING PASSWORD RECOVERY",
+      html: `<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - OTP Email Template</title>
+  
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+  <div style="margin:50px auto;width:70%;padding:20px 0">
+    <div style="border-bottom:1px solid #eee">
+      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Tgifactoring</a>
+    </div>
+    <p style="font-size:1.1em">Hi,</p>
+    <p>Thank you for choosing Tgifactoring. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
+    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
+    <p style="font-size:0.9em;">Regards,<br />Tgifactoring</p>
+    <hr style="border:none;border-top:1px solid #eee" />
+    <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
+      <p>Tgifactoring</p>
+      <p>1600 Amphitheatre Parkway</p>
+      <p>California</p>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  
+</body>
+</html>`,
+    };
+    transporter.sendMail(mail_configs, function (error, info) {
+      if (error) {
+        console.log(error);
+        return reject({ message: `An error has occured` });
+      }
+      return resolve({ message: "Email sent succesfuly" });
+    });
+  });
+}
+
+router.post("/send_recovery_email", (req, res) => {
+  console.log("Hello");
+  console.log(req.body);
+  sendEmail(req.body)
+    .then((response) => res.send(response.message))
+    .catch((error) => res.status(500).send(error.message));
 });
 
 module.exports = router;

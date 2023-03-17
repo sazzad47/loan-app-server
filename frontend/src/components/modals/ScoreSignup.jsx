@@ -121,17 +121,6 @@ const ScoreSignup = (props, ref) => {
                   >
                     Don't have an account?
                   </Link>
-                  |{" "}
-                  <Link
-                    href="#"
-                    variant="body2"
-                    /*   onClick={() => setActiveStep(2)} */
-                    sx={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    Forgot password
-                  </Link>
                 </Grid>
               </Grid>
               <StepperButtons

@@ -142,7 +142,7 @@ const PositiveAccount = (props, ref) => {
                 }}
               >
                 <a
-                  href="https://restorescorepro.net/add-tradelines"
+                  href="https://www.boompay.app/boomreport"
                   target="_blank"
                   onClick={() => setCheckedAccount(true)}
                   rel="noreferrer"
@@ -162,7 +162,7 @@ const PositiveAccount = (props, ref) => {
                   >
                     <ListItemButton>
                       <ListItemText
-                        primary={`https://restorescorepro.net/add-tradelines`}
+                        primary={`https://www.boompay.app/boomreport`}
                       />
                     </ListItemButton>
                   </ListItem>

@@ -32,8 +32,18 @@ router.post(
     const user_agreement_freeze = req.body.user_agreement_freeze;
     const consumer_office_freeze = req.body.consumer_office_freeze;
     const lexis_nexis_freeze = req.body.lexis_nexis_freeze;
-    const positive_account = req.body.positive_account;
     const teletrack_freeze = req.body.teletrack_freeze;
+    const boompay = req.body.boompay;
+    const kikoff = req.body.kikoff;
+    const self = req.body.self;
+    const creditstrong = req.body.creditstrong;
+    const experian = req.body.experian;
+    const credit = req.body.credit;
+    const innovice = req.body.innovice;
+    const clarityservices = req.body.clarityservices;
+    const checksystems = req.body.checksystems;
+    const sagestreamilc = req.body.sagestreamilc;
+    const smartcredit = req.body.smartcredit;
     try {
       // const newDocs = await Documents.create(req.body);
 
@@ -44,8 +54,18 @@ router.post(
         user_agreement_freeze: user_agreement_freeze,
         consumer_office_freeze: consumer_office_freeze,
         lexis_nexis_freeze: lexis_nexis_freeze,
-        positive_account: positive_account,
         teletrack_freeze: teletrack_freeze,
+        boompay: boompay,
+        kikoff: kikoff,
+        self: self,
+        creditstrong: creditstrong,
+        experian: experian,
+        credit: credit,
+        innovice: innovice,
+        clarityservices: clarityservices,
+        checksystems: checksystems,
+        sagestreamilc: sagestreamilc,
+        smartcredit: smartcredit,
       });
       res
         .status(201)
@@ -73,9 +93,9 @@ router.get("/", async (req, res) => {
 });
 
 //GET SPECIFIC POSTS
-router.get("/:id", async (req, res) => {
+router.get("/:email", async (req, res) => {
   try {
-    const doc = await Documents.findOne(req.params.id);
+    const doc = await Documents.findOne(req.params.email);
     res.status(200).json(doc);
   } catch (err) {
     res.status(500).json(err);

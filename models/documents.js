@@ -1,17 +1,19 @@
 const Sequelize = require("sequelize");
+const User = require("./user");
 
 module.exports = (sequelize, DataTypes) => {
   class Documents extends Sequelize.Model {}
   Documents.init(
     {
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
       },
       photo_ID: {
         type: Sequelize.STRING,
@@ -23,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_agreement_freeze: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
         defaultValue: false,
       },
       consumer_office_freeze: {
@@ -41,7 +43,58 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
-      positive_account: {
+      boompay: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      kikoff: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      self: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      creditstrong: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      experian: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      credit: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+
+      innovice: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      clarityservices: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      checksystems: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      sagestreamilc: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      smartcredit: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
@@ -49,5 +102,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     { sequelize }
   );
+
   return Documents;
 };
