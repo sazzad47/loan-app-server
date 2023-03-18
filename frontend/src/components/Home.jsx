@@ -1,6 +1,8 @@
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import React from "react";
@@ -105,7 +107,30 @@ const Home = () => {
       </Box>
       <Box>
         {checkBoxLabels.map((label, i) => (
-          <FormCheckBox key={`${label.label}${i}`} label={label} />
+          <Box
+            key={`${label.label}${i}`}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1em",
+            }}
+          >
+            <FormCheckBox label={label} />
+
+            <Chip
+              color="primary"
+              component={Button}
+              disableRipple
+              size="small"
+              label={`Step ${i + 1}`}
+              sx={{
+                textTransform: "none",
+                ":hover": {
+                  background: theme.palette.primary.light,
+                },
+              }}
+            />
+          </Box>
         ))}
       </Box>
     </Box>

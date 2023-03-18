@@ -146,7 +146,6 @@ const PositiveAccount = (props, ref) => {
 
   const handleClose = () => {
     setOpen(false);
-
     dispatch(
       submitUploadFiles({
         photo_ID,
