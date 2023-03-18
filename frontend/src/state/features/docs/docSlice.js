@@ -9,6 +9,17 @@ const initialState = {
   consumer_office_freeze: false,
   lexis_nexis_freeze: false,
   positive_account: false,
+  boomplay: false,
+  kikoff: false,
+  self: false,
+  creditstrong: false,
+  experian: false,
+  credit: false,
+  innovice: false,
+  clarityservices: false,
+  chexsystems: false,
+  sagestreamilc: false,
+  smartcredit: false,
   uploadSuccess: false,
   uploadError: false,
   uploadLoading: false,
@@ -20,7 +31,6 @@ const docSlice = createSlice({
   initialState,
   reducers: {
     docStateUpdate: (state, action) => {
-      console.log(action.payload.photo_ID);
       state.email = action.payload.email;
       state.photo_ID = action.payload.photo_ID;
       state.proof_of_address = action.payload.proof_of_address;
@@ -28,6 +38,16 @@ const docSlice = createSlice({
       state.consumer_office_freeze = action.payload.consumer_office_freeze;
       state.lexis_nexis_freeze = action.payload.lexis_nexis_freeze;
       state.positive_account = action.payload.positive_account;
+      state.boomplay = action.payload.boomplay;
+      state.kikoff = action.payload.kikoff;
+      state.self = action.payload.self;
+      state.creditstrong = action.payload.creditstrong;
+      state.experian = action.payload.experian;
+      state.credit = action.payload.credit;
+      state.innovice = action.payload.innovice;
+      state.clarityservices = action.payload.clarityservices;
+      state.sagestreamilc = action.payload.sagestreamilc;
+      state.smartcredit = action.payload.smartcredit;
     },
   },
   extraReducers: (builder) => {

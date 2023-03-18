@@ -72,9 +72,9 @@ const FormCheckBox = ({ label }) => {
                   : "primary"
               }
               component={Button}
-              disabled={
+              /*  disabled={
                 !email && label.label !== "Signup and Share Login Details"
-              }
+              } */
               disableRipple
               onClick={() => ref.current?.open()}
               size="small"
