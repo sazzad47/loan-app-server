@@ -55,7 +55,7 @@ const AdminLogin = () => {
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   useEffect(() => {
-    if (email === "roxtaylor15@gmail.com") {
+    if (email === "admin@gmail.com") {
       navigate("/admin");
     }
   });
@@ -131,8 +131,6 @@ const AdminLogin = () => {
             >
               Sign In
             </Button>
-
-            {errors && <p style={{ color: "red" }}>Only Admins allowed!</p>}
           </Box>
         </FormikProvider>
       </Box>
