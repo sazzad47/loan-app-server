@@ -20,17 +20,6 @@ import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { BASE_URL } from "../../config";
 
 const modalStyle = {
-  // position: 'absolute',
-  // top: '50%',
-  // left: '50%',
-  // transform: 'translate(-50%, -50%)',
-  // width: 900,
-  // bgcolor: 'background.paper',
-  // borderRadius: 2,
-  // boxShadow: 24,
-  // p: 4,
-  // height: 'auto',
-  // overflow:'scroll',
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -62,17 +51,6 @@ const DisputesPage = () => {
   const handleCloseImage = () => setModalOpenImage(false);
 
   console.log(content);
-
-  // useEffect(async () => {
-  //     const url = BASE_URL + '/dispute';
-
-  //     try {
-  //         const res = await fetch(url);
-  //         const data = await res.json();
-  //     } catch (e) {
-
-  //     }
-  // },[])
 
   useEffect(() => {
     const url = BASE_URL + "/dispute";
@@ -139,9 +117,21 @@ const DisputesPage = () => {
                     <TableCell>{dispute.credit_furnisher}</TableCell>
                     <TableCell>{dispute.instruction}</TableCell>
                     <TableCell>
-                      {dispute.account_number ? (dispute.account_number) : (
-                        `equifax: ${dispute.equifax_account ? dispute.equifax_account : ''}, equifax: ${dispute.experian_account ? dispute.experian_account : ''}, Trans union: ${dispute.transUnion_account ? dispute.transUnion_account : ''},`
-                      ) }
+                      {dispute.account_number
+                        ? dispute.account_number
+                        : `equifax: ${
+                            dispute.equifax_account
+                              ? dispute.equifax_account
+                              : ""
+                          }, equifax: ${
+                            dispute.experian_account
+                              ? dispute.experian_account
+                              : ""
+                          }, Trans union: ${
+                            dispute.transUnion_account
+                              ? dispute.transUnion_account
+                              : ""
+                          },`}
                     </TableCell>
                     <TableCell>
                       {dispute.equifax ? (

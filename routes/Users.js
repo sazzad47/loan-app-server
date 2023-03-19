@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const { User, sequelize, Documents } = require("../models");
-const bcrypt = require("bcrypt");
+const { User, sequelize, Documents, Provider, Dispute } = require("../models");
 
 // // GET ALL USERS
 router.get("/", async (req, res) => {
@@ -26,10 +25,6 @@ router.get("/:id", async (req, res) => {
 // UPDATE USER
 router.put("/:id", async (req, res) => {
   // find the user with the given email address
-  if (req.body.password) {
-    const salt = await bcrypt.genSalt(10);
-    req.body.password = await bcrypt.hash(req.body.password, salt);
-  }
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
     // update the user's fields with the given updates
@@ -44,7 +39,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
+    const doc = await Documents.findOne({ where: { email: user.email } });
+    const provider = await Provider.findOne({ where: { email: user.email } });
+    const dispute = await Dispute.findOne({ where: { email: user.email } });
 
+    await doc.destroy();
+    await provider.destroy();
+    await dispute.destroy();
     await user.destroy();
 
     return res.json({ message: `User ${user.email} deleted!` });

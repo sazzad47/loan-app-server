@@ -18,7 +18,7 @@ router.post("/update-password", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     const updatedUser = await User.update(
-      { password: hashedPassword },
+      { password: newPassword },
       { where: { email } }
     );
 
@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
     const newUser = await User.create({
       //   username: req.body.username,
       email: req.body.email,
-      password: hashedPassword,
+      password: req.body.password,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       state: req.body.state,
@@ -77,13 +77,13 @@ function sendEmail({ recipient_email, OTP }) {
     var transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "wisdomdigitalmarketing21@gmail.com",
-        pass: "Joshie@1025",
+        user: "tgifactoringrecovery@gmail.com",
+        pass: "npdpvycduobfxkjw",
       },
     });
 
     const mail_configs = {
-      from: "wisdomdigitalmarketing21@gmail.com",
+      from: "tgifactoringrecovery@gmail.com",
       to: recipient_email,
       subject: "TGIFACTORING PASSWORD RECOVERY",
       html: `<!DOCTYPE html>

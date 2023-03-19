@@ -16,31 +16,43 @@ router.get("/", async (req, res) => {
 router.get("/:email", async (req, res) => {
   try {
     const provider = await Provider.findAll({
-      where: { id: req.params.email },
+      where: { email: req.params.email },
     });
-    res.status(200).json(providers);
+    res.status(200).json(provider);
   } catch (err) {
-    console.log("Hello");
     res.status(500).json(err);
   }
 });
 
-// // UPDATE Provider
-// router.put("/:id", async (req, res) => {
-//   // find the user with the given email address
-//   if (req.body.password) {
-//     const salt = await bcrypt.genSalt(10);
-//     req.body.password = await bcrypt.hash(req.body.password, salt);
-//   }
-//   try {
-//     const user = await User.findOne({ where: { id: req.params.id } });
-//     // update the user's fields with the given updates
-//     const updated = await user.update(req.body);
-//     res.json({ message: "User updated successfully", updated });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.post("/", async (req, res) => {
+  try {
+    const provider = await Provider.create({
+      email: req.body.email,
+      username: req.body.username,
+      password: req.body.password,
+      phone_no: req.body.phone_no,
+      security_word: req.body.security_word,
+      report_provider: req.body.report_provider,
+    });
+    res.status(201).json(provider);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// UPDATE Provider
+router.put("/:email", async (req, res) => {
+  // find the user with the given email address
+
+  try {
+    const user = await User.findOne({ where: { email: req.params.email } });
+    // update the user's fields with the given updates
+    const updated = await user.update(req.body);
+    res.json({ message: "User updated successfully", updated });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // // DELETE Provider details
 // router.delete("/:id", async (req, res) => {

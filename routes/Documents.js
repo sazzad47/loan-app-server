@@ -95,7 +95,7 @@ router.get("/", async (req, res) => {
 //GET SPECIFIC POSTS
 router.get("/:email", async (req, res) => {
   try {
-    const doc = await Documents.findOne(req.params.email);
+    const doc = await Documents.findOne({ where: { email: req.params.email } });
     res.status(200).json(doc);
   } catch (err) {
     res.status(500).json(err);
