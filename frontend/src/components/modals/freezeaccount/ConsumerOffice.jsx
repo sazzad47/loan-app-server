@@ -62,7 +62,6 @@ const ConsumerOffice = () => {
     <a
       href="https://www.ars-consumeroffice.com/add"
       target="_blank"
-      onClick={() => setChecked(true)}
       rel="noreferrer"
       style={{
         textDecoration: "none",
@@ -70,7 +69,11 @@ const ConsumerOffice = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox checked={checked} onChange={onChange} edge="end" />
+          <Checkbox
+            onClick={() => setChecked(!checked)}
+            onChange={onChange}
+            edge="end"
+          />
         }
         disablePadding
       >

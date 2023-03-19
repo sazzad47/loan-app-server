@@ -19,6 +19,7 @@ import { login } from "../../../state/features/Auth/authActions";
 import { clearAuthMessages } from "../../../state/features/Auth/authSlice";
 import Spinner from "../../utils/Spinner";
 import Modal from "@mui/material/Modal";
+import api from "../../../state/api/api";
 
 import { useContext, useRef } from "react";
 import axios from "axios";
@@ -76,8 +77,8 @@ export default function Signin() {
       // console.log(`${process.env.REACT_APP_API_KEY}send_recovery_email`);
       try {
         console.log("first");
-        axios
-          .post(`http://localhost:4000/auth/send_recovery_email`, {
+        api
+          .post(`/auth/send_recovery_email`, {
             // .post(`${process.env.REACT_APP_API_KEY}send_recovery_email`, {
             OTP,
             recipient_email: emaill,
@@ -107,6 +108,12 @@ export default function Signin() {
 
   const { loading, error, msg } = useSelector((store) => store.auth);
   const { email } = useSelector((store) => store.auth);
+  console.log("messsage", msg);
+  useEffect(() => {
+    if (msg === "Success Login") {
+      window.location.reload();
+    }
+  }, [msg]);
 
   const {
     photo_ID,
@@ -255,6 +262,7 @@ export default function Signin() {
               variant="body2"
               sx={{
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
               Forgot password?

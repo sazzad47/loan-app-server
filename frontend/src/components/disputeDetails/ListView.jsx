@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import api from "../../state/api/api";
 
 // const tableData = [
 //   {
@@ -65,11 +66,11 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const ListView = () => {
   const [tableData, setTableData] = useState([]);
 
-  const { email } = useSelector((store) => store.auth);
+  const { email, error } = useSelector((store) => store.auth);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get("http://69.162.75.30:5000/dispute");
+      const res = await api.get("/dispute");
       console.log("this are ", res.data);
 
       if (res.data.lenght !== 0) {

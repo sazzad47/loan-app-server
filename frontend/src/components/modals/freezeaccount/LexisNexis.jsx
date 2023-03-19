@@ -63,7 +63,6 @@ const LexisNexis = () => {
   return (
     <a
       href="https://optout.lexisnexis.com"
-      onClick={() => setChecked(true)}
       target="_blank"
       rel="noreferrer"
       style={{
@@ -72,7 +71,11 @@ const LexisNexis = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox checked={checked} onChange={onChange} edge="end" />
+          <Checkbox
+            onClick={() => setChecked(!checked)}
+            onChange={onChange}
+            edge="end"
+          />
         }
         disablePadding
       >

@@ -74,7 +74,7 @@ const Self = () => {
     <a
       href="https://www.self.inc/"
       target="_blank"
-      onClick={() => setChecked(true)}
+      // onClick={() => setChecked(true)}
       rel="noreferrer"
       style={{
         textDecoration: "none",
@@ -82,7 +82,11 @@ const Self = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox checked={checked} onChange={onChange} edge="end" />
+          <Checkbox
+            onClick={() => setChecked(!checked)}
+            onChange={onChange}
+            edge="end"
+          />
         }
         disablePadding
       >

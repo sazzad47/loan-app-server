@@ -77,7 +77,11 @@ const Kikoff = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox checked={checked} onChange={onChange} edge="end" />
+          <Checkbox
+            onClick={() => setChecked(!checked)}
+            onChange={onChange}
+            edge="end"
+          />
         }
         disablePadding
       >

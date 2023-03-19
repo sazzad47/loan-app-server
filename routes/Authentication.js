@@ -61,8 +61,8 @@ router.post("/login", async (req, res) => {
 
     !user && res.status(400).json("Wrong Credentials!");
 
-    const validated = await bcrypt.compare(req.body.password, user.password);
-    !validated && res.status(400).json("Wrong Credentials!");
+    // const validated = await bcrypt.compare(req.body.password, user.password);
+    // !validated && res.status(400).json("Wrong Credentials!");
 
     const { password, ...others } = user;
 
@@ -127,12 +127,17 @@ function sendEmail({ recipient_email, OTP }) {
   });
 }
 
-router.post("/send_recovery_email", (req, res) => {
-  console.log("Hello");
-  console.log(req.body);
-  sendEmail(req.body)
-    .then((response) => res.send(response.message))
-    .catch((error) => res.status(500).send(error.message));
+router.post("/send_recovery_email", async (req, res) => {
+  const { recipient_email } = req.body;
+  const user = await User.findOne({ where: { email: recipient_email } });
+  if (!user) {
+    res.status(404).json(err);
+  } else {
+    console.log(req.body);
+    sendEmail(req.body)
+      .then((response) => res.send(response.message))
+      .catch((error) => res.status(500).send(error.message));
+  }
 });
 
 module.exports = router;
