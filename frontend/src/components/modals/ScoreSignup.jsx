@@ -68,6 +68,7 @@ const ScoreSignup = (props, ref) => {
   useEffect(() => {
     if (email) {
       setChecked(true);
+      handleClose();
     } else {
       setChecked(false);
     }
