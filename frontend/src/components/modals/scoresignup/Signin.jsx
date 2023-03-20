@@ -108,6 +108,7 @@ export default function Signin() {
 
   const { loading, error, msg } = useSelector((store) => store.auth);
   const { email } = useSelector((store) => store.auth);
+  console.log("messsage", msg);
   useEffect(() => {
     if (msg === "Success Login") {
       window.location.reload();

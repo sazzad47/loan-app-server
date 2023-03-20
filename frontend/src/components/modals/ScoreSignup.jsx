@@ -26,13 +26,7 @@ const ScoreSignup = (props, ref) => {
   const [skipped, setSkipped] = React.useState(new Set());
   const [checked, setChecked] = React.useState(false);
 
-  const { email, msg } = useSelector((store) => store.auth);
-
-  useEffect(() => {
-    if (msg === "user saved successfully") {
-      window.location.reload();
-    }
-  }, [msg]);
+  const { email } = useSelector((store) => store.auth);
 
   const isStepSkipped = (step) => {
     return skipped.has(step);

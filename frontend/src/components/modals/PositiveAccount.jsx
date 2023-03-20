@@ -14,12 +14,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { submitUploadFiles } from "../../state/features/docs/docActions";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
 import Boompay from "./positiveacccountlinks/Boompay";
-
+import ChexSystems from "./positiveacccountlinks/ChexSystems";
+import ClarityServices from "./positiveacccountlinks/ClarityServices";
 import Credit from "./positiveacccountlinks/Credit";
 import CreditStrong from "./positiveacccountlinks/CreditStrong";
 import Experian from "./positiveacccountlinks/Experian";
+import Innovice from "./positiveacccountlinks/Innovice";
 import Kikoff from "./positiveacccountlinks/Kikoff";
+import Sagestreamilc from "./positiveacccountlinks/Sagestreamilc";
 import Self from "./positiveacccountlinks/Self";
+import SmartCredit from "./positiveacccountlinks/SmartCredit";
 
 const PositiveAccount = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -194,6 +198,11 @@ const PositiveAccount = (props, ref) => {
                 <CreditStrong />
                 <Experian />
                 <Credit />
+                <Innovice />
+                <ClarityServices />
+                <ChexSystems />
+                <Sagestreamilc />
+                <SmartCredit />
               </List>
             </Box>
           </Box>

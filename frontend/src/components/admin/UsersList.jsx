@@ -132,9 +132,6 @@ const UsersList = () => {
   const handleCloseImage = () => setModalOpenImage(false);
 
   console.log(providers);
-  const doc = [
-    { uri: `${BASE_URL}/${fileLoc}` }, // Remote file
-  ];
 
   useEffect(() => {
     const url = BASE_URL + "/user";
@@ -187,8 +184,6 @@ const UsersList = () => {
       setEditing("");
     }
   };
-
-  console.log("this poviders", providers);
 
   return (
     <>
@@ -276,36 +271,32 @@ const UsersList = () => {
                   />
                 </Box>
                 <Box>
-                  {docs.photo_ID !== "" && (
-                    <Typography
-                      id="modal-modal-description"
-                      sx={{ mt: 2, cursor: "pointer" }}
+                  <Typography
+                    id="modal-modal-description"
+                    sx={{ mt: 2, cursor: "pointer" }}
+                  >
+                    <Link
+                      onClick={() => {
+                        setFileLoc(docs.photo_ID);
+                        handleOPenImage();
+                      }}
                     >
-                      <Link
-                        onClick={() => {
-                          setFileLoc(docs.photo_ID);
-                          handleOPenImage();
-                        }}
-                      >
-                        Photo ID
-                      </Link>
-                    </Typography>
-                  )}
-                  {docs.proof_of_address !== "" && (
-                    <Typography
-                      id="modal-modal-description"
-                      sx={{ mt: 2, cursor: "pointer" }}
+                      Photo ID
+                    </Link>
+                  </Typography>
+                  <Typography
+                    id="modal-modal-description"
+                    sx={{ mt: 2, cursor: "pointer" }}
+                  >
+                    <Link
+                      onClick={() => {
+                        setFileLoc(docs.proof_of_address);
+                        handleOPenImage();
+                      }}
                     >
-                      <Link
-                        onClick={() => {
-                          setFileLoc(docs.proof_of_address);
-                          handleOPenImage();
-                        }}
-                      >
-                        Proof of Address
-                      </Link>
-                    </Typography>
-                  )}
+                      Proof of Address
+                    </Link>
+                  </Typography>
                 </Box>
               </>
             ) : (
@@ -316,7 +307,7 @@ const UsersList = () => {
               </>
             )}
           </Box>
-          {providers !== undefined ? (
+          {providers !== null && (
             <ChildModal
               username={providers.username}
               password={providers.password}
@@ -324,12 +315,6 @@ const UsersList = () => {
               security_word={providers.security_word}
               report_provider={providers.report_provider}
             />
-          ) : (
-            <>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                No Provider credentials provided
-              </Typography>
-            </>
           )}
         </Box>
       </Modal>
@@ -428,8 +413,8 @@ const UsersList = () => {
           <div id="editor-contaner">
             <div className="editor">
               <DocViewer
-                documents={doc}
-                initialActiveDocument={doc[1]}
+                documents={docs}
+                initialActiveDocument={docs[1]}
                 pluginRenderers={DocViewerRenderers}
               />
             </div>
