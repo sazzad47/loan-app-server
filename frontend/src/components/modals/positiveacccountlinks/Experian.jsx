@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { docStateUpdate } from "../../../state/features/docs/docSlice";
+import api from "../../../state/api/api";
 
 const Experian = () => {
   const [checked, setChecked] = useState(false);
@@ -31,54 +32,72 @@ const Experian = () => {
   const link =
     "experian.com/consumer-products/score-boost.html?pc=sem_exp_google&cc=sem_exp_google_ad_1651407997_65972645920_379826966571_aud-942381786946:kwd-585063777506_e___k_CjwKCAjwpKyYBhB7EiwAU2Hn2c9Xv7mEBBfnOVL7BnMcCnuQU0kqDy3xvCwIhMBmS5ch6yWJL4dHpBoCSLUQAvD_BwE_k_&ref=brand&awsearchcpc=1&gclid=CjwKCAjwpKyYBhB7EiwAU2Hn2c9Xv7mEBBfnOVL7BnMcCnuQU0kqDy3xvCwIhMBmS5ch6yWJL4dHpBoCSLUQAvD_BwE";
 
-  useEffect(() => {
-    if (checked) {
-      dispatch(
-        docStateUpdate({
-          photo_ID,
-          email,
-          proof_of_address,
-          user_agreement_freeze,
-          consumer_office_freeze,
-          lexis_nexis_freeze,
+  const saveData = () => {
+    setChecked(!checked);
+    saveToDb();
+  };
 
-          boomplay,
-          kikoff,
-          self,
-          creditstrong,
-          experian: checked,
-        })
-      );
-    } else {
-      docStateUpdate({
-        photo_ID,
-        email,
-        proof_of_address,
-        user_agreement_freeze,
-        consumer_office_freeze,
-        lexis_nexis_freeze,
+  const saveToDb = async () => {
+    // console.log(!checked);
 
-        boomplay,
-        kikoff,
-        self,
-        creditstrong,
-        experian: checked,
+    try {
+      const res = await api.put(`/docs/${email}`, {
+        experian: !checked,
       });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  }, [
-    boomplay,
-    checked,
-    consumer_office_freeze,
-    creditstrong,
-    dispatch,
-    email,
-    kikoff,
-    lexis_nexis_freeze,
-    photo_ID,
-    proof_of_address,
-    self,
-    user_agreement_freeze,
-  ]);
+  };
+
+  // useEffect(() => {
+  //   if (checked) {
+  //     dispatch(
+  //       docStateUpdate({
+  //         photo_ID,
+  //         email,
+  //         proof_of_address,
+  //         user_agreement_freeze,
+  //         consumer_office_freeze,
+  //         lexis_nexis_freeze,
+
+  //         boomplay,
+  //         kikoff,
+  //         self,
+  //         creditstrong,
+  //         experian: checked,
+  //       })
+  //     );
+  //   } else {
+  //     docStateUpdate({
+  //       photo_ID,
+  //       email,
+  //       proof_of_address,
+  //       user_agreement_freeze,
+  //       consumer_office_freeze,
+  //       lexis_nexis_freeze,
+
+  //       boomplay,
+  //       kikoff,
+  //       self,
+  //       creditstrong,
+  //       experian: checked,
+  //     });
+  //   }
+  // }, [
+  //   boomplay,
+  //   checked,
+  //   consumer_office_freeze,
+  //   creditstrong,
+  //   dispatch,
+  //   email,
+  //   kikoff,
+  //   lexis_nexis_freeze,
+  //   photo_ID,
+  //   proof_of_address,
+  //   self,
+  //   user_agreement_freeze,
+  // ]);
 
   return (
     <a
@@ -92,11 +111,7 @@ const Experian = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox
-            onClick={() => setChecked(!checked)}
-            onChange={onChange}
-            edge="end"
-          />
+          <Checkbox onClick={saveData} edge="end" isChecked={checked} />
         }
         disablePadding
       >

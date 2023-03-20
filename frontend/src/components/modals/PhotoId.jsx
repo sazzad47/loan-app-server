@@ -14,6 +14,7 @@ import React, {
 import { useDispatch, useSelector } from "react-redux";
 import ProofID from "../../assets/proof_id.png";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
+import api from "../../state/api/api";
 
 const PhotoId = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -54,13 +55,26 @@ const PhotoId = (props, ref) => {
     setPhotoID(selectedFile);
   };
 
-  useEffect(() => {
-    if (photo_ID) {
+  // useEffect(() => {
+  //   if (photo_ID) {
+  //     setChecked(true);
+  //   } else {
+  //     setChecked(false);
+  //   }
+  // }, [photo_ID]);
+
+  const saveData = async () => {
+    try {
+      const res = await api.put(`/docs/${email}`, {
+        photo_ID: `uploads/${email}-${Date.now()}-${photo_ID.name}`,
+      });
       setChecked(true);
-    } else {
-      setChecked(false);
+
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  }, [photo_ID]);
+  };
 
   return (
     <div>
@@ -137,21 +151,7 @@ const PhotoId = (props, ref) => {
                 sx={{
                   textTransform: "none",
                 }}
-                onClick={() => {
-                  dispatch(
-                    docStateUpdate({
-                      photo_ID,
-                      email,
-                      proof_of_address,
-                      user_agreement_freeze,
-                      consumer_office_freeze,
-                      lexis_nexis_freeze,
-                      positive_account,
-                    })
-                  );
-                  setChecked(true);
-                  handleClose();
-                }}
+                onClick={saveData}
               >
                 Upload
               </Button>

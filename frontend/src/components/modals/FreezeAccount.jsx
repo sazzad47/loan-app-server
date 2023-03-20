@@ -11,11 +11,20 @@ import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import ConsumerOffice from "./freezeaccount/ConsumerOffice";
 import LexisNexis from "./freezeaccount/LexisNexis";
+import ChexSystems from "./positiveacccountlinks/ChexSystems";
+import ClarityServices from "./positiveacccountlinks/ClarityServices";
+import Innovice from "./positiveacccountlinks/Innovice";
+import Sagestreamilc from "./positiveacccountlinks/Sagestreamilc";
+import SmartCredit from "./positiveacccountlinks/SmartCredit";
+import api from "../../state/api/api";
+import { useDispatch, useSelector } from "react-redux";
 
 const FreezeAccount = (props, ref) => {
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const theme = useTheme();
+
+  const { email } = useSelector((store) => store.auth);
 
   useImperativeHandle(ref, () => ({
     open() {
@@ -26,6 +35,24 @@ const FreezeAccount = (props, ref) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const saveData = () => {
+    setChecked(!checked);
+    saveToDb();
+  };
+
+  const saveToDb = async () => {
+    // console.log(!checked);
+
+    try {
+      const res = await api.put(`/docs/${email}`, {
+        teletrack_freeze: !checked,
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -63,8 +90,20 @@ const FreezeAccount = (props, ref) => {
               >
                 <ConsumerOffice />
                 <LexisNexis />
+
+                <Innovice />
+                <ClarityServices />
+                <ChexSystems />
+                <Sagestreamilc />
+                <SmartCredit />
                 <ListItem
-                  secondaryAction={<Checkbox edge="end" />}
+                  secondaryAction={
+                    <Checkbox
+                      onClick={saveData}
+                      edge="end"
+                      isChecked={checked}
+                    />
+                  }
                   disablePadding
                 >
                   <ListItemButton>

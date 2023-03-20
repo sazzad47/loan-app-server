@@ -4,7 +4,7 @@ const { json } = require("express");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
-const { sequelize, User } = require("../models");
+const { sequelize, User, Documents } = require("../models");
 
 router.post("/update-password", async (req, res) => {
   const { email, newPassword } = req.body;
@@ -48,7 +48,29 @@ router.post("/register", async (req, res) => {
       dob: req.body.dob,
       ss_number: req.body.ss_number,
     });
-    return res.status(201).json({ msg: "user saved successfully", newUser });
+    const newDocs = await Documents.create({
+      email: req.body.email,
+      photo_ID: "photo",
+      proof_of_address: "photo",
+      user_agreement_freeze: false,
+      consumer_office_freeze: false,
+      lexis_nexis_freeze: false,
+      positive_account: false,
+      boomplay: false,
+      kikoff: false,
+      self: false,
+      creditstrong: false,
+      experian: false,
+      credit: false,
+      innovice: false,
+      clarityservices: false,
+      chexsystems: false,
+      sagestreamilc: false,
+      smartcredit: false,
+    });
+    return res
+      .status(201)
+      .json({ msg: "user saved successfully", newUser, Document: newDocs });
   } catch (err) {
     res.status(500).json(err);
   }

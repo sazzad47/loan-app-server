@@ -4,10 +4,16 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Typography from "@mui/material/Typography";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useEffect,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProofAdd from "../../assets/proof_add.png";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
+import api from "../../state/api/api";
 
 const ProofAddress = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -47,6 +53,25 @@ const ProofAddress = (props, ref) => {
   const handleFileSelect = (event) => {
     const selectedFile = event.target.files[0];
     setProofOfAddress(selectedFile);
+  };
+
+  const saveData = async () => {
+    if (photo_ID) {
+      try {
+        const res = await api.put(`/docs/${email}`, {
+          proof_of_address: `uploads/${email}-${Date.now()}-${
+            proof_of_address.name
+          }`,
+        });
+        setChecked(true);
+
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setChecked(false);
+    }
   };
 
   return (
@@ -126,21 +151,7 @@ const ProofAddress = (props, ref) => {
                 sx={{
                   textTransform: "none",
                 }}
-                onClick={() => {
-                  dispatch(
-                    docStateUpdate({
-                      photo_ID,
-                      email,
-                      proof_of_address,
-                      user_agreement_freeze,
-                      consumer_office_freeze,
-                      lexis_nexis_freeze,
-                      positive_account,
-                    })
-                  );
-                  setChecked(true);
-                  handleClose();
-                }}
+                onClick={saveData}
               >
                 Upload
               </Button>

@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { docStateUpdate } from "../../../state/features/docs/docSlice";
+import api from "../../../state/api/api";
 
 const Kikoff = () => {
   const [checked, setChecked] = useState(false);
@@ -25,45 +26,63 @@ const Kikoff = () => {
     setChecked((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (checked) {
-      dispatch(
-        docStateUpdate({
-          photo_ID,
-          email,
-          proof_of_address,
-          user_agreement_freeze,
-          consumer_office_freeze,
-          lexis_nexis_freeze,
+  const saveData = () => {
+    setChecked(!checked);
+    saveToDb();
+  };
 
-          boomplay,
-          kikoff: checked,
-        })
-      );
-    } else {
-      docStateUpdate({
-        photo_ID,
-        email,
-        proof_of_address,
-        user_agreement_freeze,
-        consumer_office_freeze,
-        lexis_nexis_freeze,
+  const saveToDb = async () => {
+    console.log("Kickof");
 
-        boomplay,
-        kikoff: checked,
+    try {
+      const res = await api.put(`/docs/${email}`, {
+        kikoff: !checked,
       });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  }, [
-    boomplay,
-    checked,
-    consumer_office_freeze,
-    dispatch,
-    email,
-    lexis_nexis_freeze,
-    photo_ID,
-    proof_of_address,
-    user_agreement_freeze,
-  ]);
+  };
+
+  // useEffect(() => {
+  //   if (checked) {
+  //     dispatch(
+  //       docStateUpdate({
+  //         photo_ID,
+  //         email,
+  //         proof_of_address,
+  //         user_agreement_freeze,
+  //         consumer_office_freeze,
+  //         lexis_nexis_freeze,
+
+  //         boomplay,
+  //         kikoff: checked,
+  //       })
+  //     );
+  //   } else {
+  //     docStateUpdate({
+  //       photo_ID,
+  //       email,
+  //       proof_of_address,
+  //       user_agreement_freeze,
+  //       consumer_office_freeze,
+  //       lexis_nexis_freeze,
+
+  //       boomplay,
+  //       kikoff: checked,
+  //     });
+  //   }
+  // }, [
+  //   boomplay,
+  //   checked,
+  //   consumer_office_freeze,
+  //   dispatch,
+  //   email,
+  //   lexis_nexis_freeze,
+  //   photo_ID,
+  //   proof_of_address,
+  //   user_agreement_freeze,
+  // ]);
 
   return (
     <a
@@ -77,11 +96,7 @@ const Kikoff = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox
-            onClick={() => setChecked(!checked)}
-            onChange={onChange}
-            edge="end"
-          />
+          <Checkbox onClick={saveData} edge="end" isChecked={checked} />
         }
         disablePadding
       >

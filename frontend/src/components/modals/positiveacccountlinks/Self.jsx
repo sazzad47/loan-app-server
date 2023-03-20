@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { docStateUpdate } from "../../../state/features/docs/docSlice";
+import api from "../../../state/api/api";
 
 const Self = () => {
   const [checked, setChecked] = useState(false);
@@ -26,49 +27,67 @@ const Self = () => {
     setChecked((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (checked) {
-      dispatch(
-        docStateUpdate({
-          photo_ID,
-          email,
-          proof_of_address,
-          user_agreement_freeze,
-          consumer_office_freeze,
-          lexis_nexis_freeze,
-          positive_account,
-          boomplay,
-          kikoff,
-          self: checked,
-        })
-      );
-    } else {
-      docStateUpdate({
-        photo_ID,
-        email,
-        proof_of_address,
-        user_agreement_freeze,
-        consumer_office_freeze,
-        lexis_nexis_freeze,
-        positive_account,
-        boomplay,
-        kikoff,
-        self: checked,
+  const saveData = () => {
+    setChecked(!checked);
+    saveToDb();
+  };
+
+  const saveToDb = async () => {
+    // console.log(!checked);
+
+    try {
+      const res = await api.put(`/docs/${email}`, {
+        self: !checked,
       });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  }, [
-    boomplay,
-    checked,
-    consumer_office_freeze,
-    dispatch,
-    email,
-    kikoff,
-    lexis_nexis_freeze,
-    photo_ID,
-    positive_account,
-    proof_of_address,
-    user_agreement_freeze,
-  ]);
+  };
+
+  // useEffect(() => {
+  //   if (checked) {
+  //     dispatch(
+  //       docStateUpdate({
+  //         photo_ID,
+  //         email,
+  //         proof_of_address,
+  //         user_agreement_freeze,
+  //         consumer_office_freeze,
+  //         lexis_nexis_freeze,
+  //         positive_account,
+  //         boomplay,
+  //         kikoff,
+  //         self: checked,
+  //       })
+  //     );
+  //   } else {
+  //     docStateUpdate({
+  //       photo_ID,
+  //       email,
+  //       proof_of_address,
+  //       user_agreement_freeze,
+  //       consumer_office_freeze,
+  //       lexis_nexis_freeze,
+  //       positive_account,
+  //       boomplay,
+  //       kikoff,
+  //       self: checked,
+  //     });
+  //   }
+  // }, [
+  //   boomplay,
+  //   checked,
+  //   consumer_office_freeze,
+  //   dispatch,
+  //   email,
+  //   kikoff,
+  //   lexis_nexis_freeze,
+  //   photo_ID,
+  //   positive_account,
+  //   proof_of_address,
+  //   user_agreement_freeze,
+  // ]);
 
   return (
     <a
@@ -82,11 +101,7 @@ const Self = () => {
     >
       <ListItem
         secondaryAction={
-          <Checkbox
-            onClick={() => setChecked(!checked)}
-            onChange={onChange}
-            edge="end"
-          />
+          <Checkbox onClick={saveData} edge="end" isChecked={checked} />
         }
         disablePadding
       >

@@ -58,7 +58,7 @@ export default function PageTabs() {
       component: <Resources />,
     },
     {
-      label: "Settings",
+      label: "Pull Credit Report",
       component: <Settings />,
     },
   ];

@@ -103,12 +103,11 @@ router.get("/:email", async (req, res) => {
 });
 
 // UPDATE POST
-router.put("/:id", async (req, res) => {
-  const email = req.body.email;
-  const doc = await Documents.findOne(req.params.id);
-  if (email === post.email) {
+router.put("/:email", async (req, res) => {
+  const email = req.params.email;
+  const doc = await Documents.findOne({ where: { email: req.params.email } });
+  if (email === doc.email) {
     try {
-      const doc = await Documents.findOne({ where: { id: req.params.id } });
       const updatedDoc = await doc.update(req.body);
       res.status(200).json(updatedDoc);
     } catch (err) {

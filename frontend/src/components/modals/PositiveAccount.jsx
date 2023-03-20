@@ -14,16 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { submitUploadFiles } from "../../state/features/docs/docActions";
 import { docStateUpdate } from "../../state/features/docs/docSlice";
 import Boompay from "./positiveacccountlinks/Boompay";
-import ChexSystems from "./positiveacccountlinks/ChexSystems";
-import ClarityServices from "./positiveacccountlinks/ClarityServices";
+
 import Credit from "./positiveacccountlinks/Credit";
 import CreditStrong from "./positiveacccountlinks/CreditStrong";
 import Experian from "./positiveacccountlinks/Experian";
-import Innovice from "./positiveacccountlinks/Innovice";
 import Kikoff from "./positiveacccountlinks/Kikoff";
-import Sagestreamilc from "./positiveacccountlinks/Sagestreamilc";
 import Self from "./positiveacccountlinks/Self";
-import SmartCredit from "./positiveacccountlinks/SmartCredit";
 
 const PositiveAccount = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -61,102 +57,102 @@ const PositiveAccount = (props, ref) => {
   } = useSelector((store) => store.docs);
   const { email } = useSelector((store) => store.auth);
 
-  useEffect(() => {
-    if (
-      boomplay &&
-      kikoff &&
-      self &&
-      creditstrong &&
-      credit &&
-      innovice &&
-      clarityservices &&
-      chexsystem &&
-      sagestreamilc &&
-      smartcredit
-    ) {
-      setCheckedAccount((prev) => !prev);
-    }
-  }, [
-    boomplay,
-    chexsystem,
-    clarityservices,
-    credit,
-    creditstrong,
-    innovice,
-    kikoff,
-    sagestreamilc,
-    self,
-    smartcredit,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     boomplay &&
+  //     kikoff &&
+  //     self &&
+  //     creditstrong &&
+  //     credit &&
+  //     innovice &&
+  //     clarityservices &&
+  //     chexsystem &&
+  //     sagestreamilc &&
+  //     smartcredit
+  //   ) {
+  //     setCheckedAccount((prev) => !prev);
+  //   }
+  // }, [
+  //   boomplay,
+  //   chexsystem,
+  //   clarityservices,
+  //   credit,
+  //   creditstrong,
+  //   innovice,
+  //   kikoff,
+  //   sagestreamilc,
+  //   self,
+  //   smartcredit,
+  // ]);
 
-  useEffect(() => {
-    if (checkedAccount) {
-      dispatch(
-        docStateUpdate({
-          photo_ID,
-          email,
-          proof_of_address,
-          user_agreement_freeze,
-          consumer_office_freeze,
-          lexis_nexis_freeze,
-          boomplay,
-          chexsystem,
-          clarityservices,
-          credit,
-          creditstrong,
-          innovice,
-          kikoff,
-          sagestreamilc,
-          self,
-          smartcredit,
-          positive_account: checkedAccount,
-        })
-      );
-    } else {
-      docStateUpdate({
-        photo_ID,
-        email,
-        proof_of_address,
-        user_agreement_freeze,
-        consumer_office_freeze,
-        lexis_nexis_freeze,
-        positive_account: checkedAccount,
-      });
-    }
-  }, [
-    boomplay,
-    checkedAccount,
-    chexsystem,
-    clarityservices,
-    consumer_office_freeze,
-    credit,
-    creditstrong,
-    dispatch,
-    email,
-    innovice,
-    kikoff,
-    lexis_nexis_freeze,
-    photo_ID,
-    proof_of_address,
-    sagestreamilc,
-    self,
-    smartcredit,
-    user_agreement_freeze,
-  ]);
+  // useEffect(() => {
+  //   if (checkedAccount) {
+  //     dispatch(
+  //       docStateUpdate({
+  //         photo_ID,
+  //         email,
+  //         proof_of_address,
+  //         user_agreement_freeze,
+  //         consumer_office_freeze,
+  //         lexis_nexis_freeze,
+  //         boomplay,
+  //         chexsystem,
+  //         clarityservices,
+  //         credit,
+  //         creditstrong,
+  //         innovice,
+  //         kikoff,
+  //         sagestreamilc,
+  //         self,
+  //         smartcredit,
+  //         positive_account: checkedAccount,
+  //       })
+  //     );
+  //   } else {
+  //     docStateUpdate({
+  //       photo_ID,
+  //       email,
+  //       proof_of_address,
+  //       user_agreement_freeze,
+  //       consumer_office_freeze,
+  //       lexis_nexis_freeze,
+  //       positive_account: checkedAccount,
+  //     });
+  //   }
+  // }, [
+  //   boomplay,
+  //   checkedAccount,
+  //   chexsystem,
+  //   clarityservices,
+  //   consumer_office_freeze,
+  //   credit,
+  //   creditstrong,
+  //   dispatch,
+  //   email,
+  //   innovice,
+  //   kikoff,
+  //   lexis_nexis_freeze,
+  //   photo_ID,
+  //   proof_of_address,
+  //   sagestreamilc,
+  //   self,
+  //   smartcredit,
+  //   user_agreement_freeze,
+  // ]);
 
   const handleClose = () => {
     setOpen(false);
-    dispatch(
-      submitUploadFiles({
-        photo_ID,
-        email,
-        proof_of_address,
-        user_agreement_freeze,
-        consumer_office_freeze,
-        lexis_nexis_freeze,
-        positive_account,
-      })
-    );
+    // dispatch(
+    //   submitUploadFiles({
+    //     photo_ID,
+    //     email,
+    //     proof_of_address,
+    //     user_agreement_freeze,
+    //     consumer_office_freeze,
+    //     lexis_nexis_freeze,
+    //     positive_account,
+    //   })
+    // );
   };
 
   return (
@@ -198,11 +194,6 @@ const PositiveAccount = (props, ref) => {
                 <CreditStrong />
                 <Experian />
                 <Credit />
-                <Innovice />
-                <ClarityServices />
-                <ChexSystems />
-                <Sagestreamilc />
-                <SmartCredit />
               </List>
             </Box>
           </Box>
