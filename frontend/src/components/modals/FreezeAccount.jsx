@@ -11,6 +11,11 @@ import Typography from "@mui/material/Typography";
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import ConsumerOffice from "./freezeaccount/ConsumerOffice";
 import LexisNexis from "./freezeaccount/LexisNexis";
+import ChexSystems from "./positiveacccountlinks/ChexSystems";
+import ClarityServices from "./positiveacccountlinks/ClarityServices";
+import Innovice from "./positiveacccountlinks/Innovice";
+import SmartCredit from "./positiveacccountlinks/SmartCredit";
+import Sagestreamilc from "./positiveacccountlinks/Sagestreamilc";
 
 const FreezeAccount = (props, ref) => {
   const [open, setOpen] = useState(false);
@@ -62,7 +67,15 @@ const FreezeAccount = (props, ref) => {
                 }}
               >
                 <ConsumerOffice />
+
+                {/* New addons */}
+                <Innovice />
+                <ClarityServices />
+                <ChexSystems />
+                <Sagestreamilc />
+                <SmartCredit />
                 <LexisNexis />
+
                 <ListItem
                   secondaryAction={<Checkbox edge="end" />}
                   disablePadding
