@@ -130,6 +130,9 @@ const UsersList = () => {
 
   const handleOPenImage = () => setModalOpenImage(true);
   const handleCloseImage = () => setModalOpenImage(false);
+  const doc = [
+    { uri: `${BASE_URL}/${fileLoc}` }, // Remote file
+  ];
 
   console.log(providers);
 
@@ -307,7 +310,7 @@ const UsersList = () => {
               </>
             )}
           </Box>
-          {providers !== null && (
+          {providers !== undefined ? (
             <ChildModal
               username={providers.username}
               password={providers.password}
@@ -315,6 +318,12 @@ const UsersList = () => {
               security_word={providers.security_word}
               report_provider={providers.report_provider}
             />
+          ) : (
+            <>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                No Provider credentials provided by this user
+              </Typography>
+            </>
           )}
         </Box>
       </Modal>
@@ -413,8 +422,8 @@ const UsersList = () => {
           <div id="editor-contaner">
             <div className="editor">
               <DocViewer
-                documents={docs}
-                initialActiveDocument={docs[1]}
+                documents={doc}
+                initialActiveDocument={doc[1]}
                 pluginRenderers={DocViewerRenderers}
               />
             </div>
