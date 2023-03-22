@@ -14,7 +14,7 @@ import api from "../state/api/api";
 
 const providers = ["IdentifyIQ", "SmartCredit"];
 
-const Settings = () => {
+const Settings = ({ setValue }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { email } = useSelector((store) => store.auth);
 
@@ -31,20 +31,21 @@ const Settings = () => {
   useEffect(() => {
     const checkProviders = async () => {
       const res = await api.get(`/provider/${email}`);
-      console.log(res.data.length);
+
       if (res.data.length !== 0) {
         setProvider({
-          username: res.data.username,
-          password: res.data.username,
-          phone_no: res.data.phone_no,
-          email: res.data.email,
-          security_word: res.data.security_word,
+          ...provider,
+          report_provider: res.data[0].report_provider,
+          username: res.data[0].username,
+          password: res.data[0].username,
+          phone_no: res.data[0].phone_no,
+          security_word: res.data[0].security_word,
         });
         setUpdate(true);
       }
     };
     checkProviders();
-  }, [update]);
+  }, [update, email]);
   const theme = useTheme();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -58,9 +59,8 @@ const Settings = () => {
   };
 
   const handleProviders = async () => {
-    console.log(provider);
     if (update) {
-      await api.put(`/provider/${email}`, {
+      const upd = await api.put(`/provider/${email}`, {
         email,
         username: provider.username,
         password: provider.password,
@@ -85,6 +85,8 @@ const Settings = () => {
         setUpdate(true);
       }
     }
+
+    setValue(0);
   };
 
   return (
@@ -104,7 +106,7 @@ const Settings = () => {
           variant="body1"
           sx={{ marginTop: "10px", marginBottom: "10px" }}
         >
-          Login Details for Credit Monitoring
+          Complete the form below and submit credentials before proceeding
         </Typography>
       </Box>
       <Box

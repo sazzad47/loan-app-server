@@ -13,33 +13,37 @@ import FreezeAccount from "./modals/FreezeAccount";
 import PhotoId from "./modals/PhotoId";
 import PositiveAccount from "./modals/PositiveAccount";
 import ProofAddress from "./modals/ProofAddress";
+import ScheduleMeeting from "./modals/ScheduleMeeting";
 import ScoreSignup from "./modals/ScoreSignup";
 
-const checkBoxLabels = [
-  {
-    label: "Signup and Share Login Details",
-    // label: "Sign Up / Sign In",
-    dialog: <ScoreSignup />,
-  },
-  {
-    label: "Upload Photo ID",
-    dialog: <PhotoId />,
-  },
-  {
-    label: "Upload proof of address",
-    dialog: <ProofAddress />,
-  },
-  {
-    label: "Positive account",
-    dialog: <PositiveAccount />,
-  },
-  {
-    label: "Freeze my account",
-    dialog: <FreezeAccount />,
-  },
-];
-
-const Home = () => {
+const Home = ({ setValue }) => {
+  const checkBoxLabels = [
+    {
+      label: "Signup and Share Login Details",
+      // label: "Sign Up / Sign In",
+      dialog: <ScoreSignup setValue={setValue} />,
+    },
+    {
+      label: "Schedule a Meeting",
+      dialog: <ScheduleMeeting />,
+    },
+    {
+      label: "Upload Photo ID",
+      dialog: <PhotoId />,
+    },
+    {
+      label: "Upload proof of address",
+      dialog: <ProofAddress />,
+    },
+    {
+      label: "Positive account",
+      dialog: <PositiveAccount />,
+    },
+    {
+      label: "Freeze my account",
+      dialog: <FreezeAccount />,
+    },
+  ];
   const theme = useTheme();
   const dispatch = useDispatch();
   const { email, first_name, last_name } = useSelector((store) => store.auth);
@@ -118,11 +122,23 @@ const Home = () => {
             <FormCheckBox label={label} />
 
             <Chip
-              color="primary"
+              color="secondary"
               component={Button}
               disableRipple
               size="small"
-              label={`Step ${i + 1}`}
+              label={
+                i === 0
+                  ? "Signup and Create"
+                  : i === 1
+                  ? "Schedule Meeting"
+                  : i === 2
+                  ? "Upload Photo ID"
+                  : i === 3
+                  ? " Upload Proof of Address"
+                  : i === 4
+                  ? "Positive Account"
+                  : "Freeze my account"
+              }
               sx={{
                 textTransform: "none",
                 ":hover": {

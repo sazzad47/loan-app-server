@@ -22,15 +22,6 @@ const ProofAddress = (props, ref) => {
   // const [fileContent, setFileContent] = useState(null);
   const theme = useTheme();
 
-  const dispatch = useDispatch();
-
-  const {
-    photo_ID,
-    user_agreement_freeze,
-    consumer_office_freeze,
-    lexis_nexis_freeze,
-    positive_account,
-  } = useSelector((store) => store.docs);
   const { email } = useSelector((store) => store.auth);
 
   useImperativeHandle(
@@ -56,21 +47,25 @@ const ProofAddress = (props, ref) => {
   };
 
   const saveData = async () => {
-    if (photo_ID) {
-      try {
-        const res = await api.put(`/docs/${email}`, {
-          proof_of_address: `uploads/${email}-${Date.now()}-${
-            proof_of_address.name
-          }`,
-        });
-        setChecked(true);
+    console.log("first,", email);
+    try {
+      const res = await api.put(
+        `/docs/${email}`,
+        {
+          proof_of_address,
+          email,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setChecked(true);
 
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      setChecked(false);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
   };
 

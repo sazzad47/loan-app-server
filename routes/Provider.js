@@ -45,10 +45,10 @@ router.put("/:email", async (req, res) => {
   // find the user with the given email address
 
   try {
-    const user = await User.findOne({ where: { email: req.params.email } });
+    const user = await Provider.findOne({ where: { email: req.params.email } });
     // update the user's fields with the given updates
     const updated = await user.update(req.body);
-    res.json({ message: "User updated successfully", updated });
+    res.json({ message: "Provider details updated successfully", updated });
   } catch (err) {
     res.status(500).json(err);
   }

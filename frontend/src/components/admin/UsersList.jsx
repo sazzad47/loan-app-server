@@ -274,32 +274,37 @@ const UsersList = () => {
                   />
                 </Box>
                 <Box>
-                  <Typography
-                    id="modal-modal-description"
-                    sx={{ mt: 2, cursor: "pointer" }}
-                  >
-                    <Link
-                      onClick={() => {
-                        setFileLoc(docs.photo_ID);
-                        handleOPenImage();
-                      }}
+                  {docs.photo_ID !== "photo" && (
+                    <Typography
+                      id="modal-modal-description"
+                      sx={{ mt: 2, cursor: "pointer" }}
                     >
-                      Photo ID
-                    </Link>
-                  </Typography>
-                  <Typography
-                    id="modal-modal-description"
-                    sx={{ mt: 2, cursor: "pointer" }}
-                  >
-                    <Link
-                      onClick={() => {
-                        setFileLoc(docs.proof_of_address);
-                        handleOPenImage();
-                      }}
+                      <Link
+                        onClick={() => {
+                          setFileLoc(docs.photo_ID);
+                          handleOPenImage();
+                        }}
+                      >
+                        Photo ID
+                      </Link>
+                    </Typography>
+                  )}
+
+                  {docs.proof_of_address !== "photo" && (
+                    <Typography
+                      id="modal-modal-description"
+                      sx={{ mt: 2, cursor: "pointer" }}
                     >
-                      Proof of Address
-                    </Link>
-                  </Typography>
+                      <Link
+                        onClick={() => {
+                          setFileLoc(docs.proof_of_address);
+                          handleOPenImage();
+                        }}
+                      >
+                        Proof of Address
+                      </Link>
+                    </Typography>
+                  )}
                 </Box>
               </>
             ) : (

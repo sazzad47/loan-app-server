@@ -5,6 +5,7 @@ import React from "react";
 
 const StepperButtons = ({ activeStep, handleBack, handleNext, steps }) => {
   const theme = useTheme();
+  console.log(activeStep);
 
   return (
     <Box
@@ -18,7 +19,7 @@ const StepperButtons = ({ activeStep, handleBack, handleNext, steps }) => {
     >
       <Button
         color="inherit"
-        disabled={activeStep === 1}
+        disable={activeStep === 1}
         onClick={handleBack}
         sx={{
           textTransform: "none",
@@ -30,8 +31,9 @@ const StepperButtons = ({ activeStep, handleBack, handleNext, steps }) => {
 
       <Button
         onClick={handleNext}
-        disabled={activeStep === steps.length}
+        // disabled={activeStep === steps.length}
         sx={{
+          display: `${activeStep === steps.length ? "none" : "flex"}`,
           textTransform: "none",
           background: theme.palette.primary.main,
           color: theme.palette.grey[100],

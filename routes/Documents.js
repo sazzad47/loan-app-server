@@ -10,9 +10,9 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    console.log(file);
-    const username = req.body.email;
-    cb(null, username + "-" + Date.now() + "-" + file.originalname);
+    console.log(req.body);
+    // const username = req.body.email;
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 
@@ -103,20 +103,34 @@ router.get("/:email", async (req, res) => {
 });
 
 // UPDATE POST
-router.put("/:email", async (req, res) => {
-  const email = req.params.email;
-  const doc = await Documents.findOne({ where: { email: req.params.email } });
-  if (email === doc.email) {
-    try {
-      const updatedDoc = await doc.update(req.body);
-      res.status(200).json(updatedDoc);
-    } catch (err) {
-      res.status(500).json(err);
+router.put(
+  "/:email",
+  upload.fields([
+    { name: "photo_ID", maxCount: 1 },
+    { name: "proof_of_address", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    console.log(req.files);
+    if ("photo_ID" in req.files) {
+      req.body.photo_ID = req.files.photo_ID[0].path;
+    } else {
+      req.body.proof_of_address = req.files.proof_of_address[0].path;
     }
-  } else {
-    res.status(401).json("Unauthorized!");
+
+    const email = req.params.email;
+    const doc = await Documents.findOne({ where: { email: req.params.email } });
+    if (email === doc.email) {
+      try {
+        const updatedDoc = await doc.update(req.body);
+        res.status(200).json(updatedDoc);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(401).json("Unauthorized!");
+    }
   }
-});
+);
 
 // DELETE Doc
 router.delete("/:id", async (req, res) => {

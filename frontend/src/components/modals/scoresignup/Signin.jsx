@@ -52,7 +52,7 @@ const style = {
   p: 4,
 };
 
-export default function Signin() {
+export default function Signin({ setValue }) {
   const { setEmaill, setPage, emaill, setOTP } = useContext(RecoveryContext);
   const [openn, setOpenn] = React.useState(false);
   const handleOpen = () => setOpenn(true);
@@ -111,7 +111,7 @@ export default function Signin() {
   console.log("messsage", msg);
   useEffect(() => {
     if (msg === "Success Login") {
-      window.location.reload();
+      setValue(4);
     }
   }, [msg]);
 

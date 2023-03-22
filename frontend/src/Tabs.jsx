@@ -43,7 +43,7 @@ export default function PageTabs() {
   const tabs = [
     {
       label: "Home",
-      component: <Home />,
+      component: <Home setValue={setValue} />,
     },
     {
       label: "Dispute Details",
@@ -59,7 +59,7 @@ export default function PageTabs() {
     },
     {
       label: "Pull Credit Report",
-      component: <Settings />,
+      component: <Settings setValue={setValue} />,
     },
   ];
 

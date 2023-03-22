@@ -21,6 +21,7 @@ import { registerUser } from "../../../state/features/Auth/authActions";
 import { clearAuthMessages } from "../../../state/features/Auth/authSlice";
 import { docStateUpdate } from "../../../state/features/docs/docSlice";
 import Spinner from "../../utils/Spinner";
+import api from "../../../state/api/api";
 
 const initialValues = {
   email: "",
@@ -58,7 +59,7 @@ const userSchema = yup.object().shape({
   }),
 });
 
-export default function Signup() {
+export default function Signup({ setValue }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [signed, setSigned] = useState(false);
@@ -111,6 +112,9 @@ export default function Signup() {
           dob,
         })
       );
+      const res = api.put(`/docs/${email}`, {
+        user_agreement_freeze: signed,
+      });
     },
   });
 
@@ -131,19 +135,20 @@ export default function Signup() {
     setSigned((prev) => !prev);
   };
 
+  // const saveToDb = async () => {
+  //   try {
+  //     const res = await api.put(`/docs/${email}`, {
+  //       user_agreement_freeze: signed,
+  //     });
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   useEffect(() => {
     if (signed) {
-      dispatch(
-        docStateUpdate({
-          photo_ID,
-          email,
-          proof_of_address,
-          user_agreement_freeze: signed,
-          consumer_office_freeze,
-          lexis_nexis_freeze,
-          positive_account,
-        })
-      );
+      setValue(4);
     }
   });
 
@@ -247,10 +252,35 @@ export default function Signup() {
                   autoComplete="ss_number"
                   variant="filled"
                   size="small"
-                  {...getFieldProps("ss_number")}
-                  error={!!!!touched.ss_number && !!errors.ss_number}
+                  type="text"
+                  inputProps={{ maxLength: 11, pattern: "[0-9]*" }}
+                  {...getFieldProps("ss_number", {
+                    onChange: (event) => {
+                      const value = event.target.value;
+                      const newValue = value.replace(/\D/g, "").slice(0, 9);
+                      const formattedValue = newValue.replace(
+                        /^(\d{0,3})(\d{0,2})(\d{0,4})$/,
+                        (match, p1, p2, p3) => {
+                          let parts = [];
+                          if (p1) {
+                            parts.push(p1);
+                          }
+                          if (p2) {
+                            parts.push(p2);
+                          }
+                          if (p3) {
+                            parts.push(p3);
+                          }
+                          return parts.join("-");
+                        }
+                      );
+                      formik.setFieldValue("ss_number", formattedValue);
+                    },
+                  })}
+                  error={touched.ss_number && !!errors.ss_number}
                   helperText={touched.ss_number && errors.ss_number}
                 />
+
                 <TextField
                   InputLabelProps={{
                     shrink: true,

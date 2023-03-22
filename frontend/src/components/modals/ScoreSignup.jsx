@@ -102,7 +102,7 @@ const ScoreSignup = (props, ref) => {
                 flexDirection: "column",
               }}
             >
-              <Signin />
+              <Signin setValue={props.setValue} />
               <Grid
                 container
                 sx={{
@@ -143,7 +143,7 @@ const ScoreSignup = (props, ref) => {
                   <GetStarted />
                 ) : activeStep === 2 ? (
                   <>
-                    <Signup />
+                    <Signup setValue={props.setValue} />
                     {activeStep === 2 && (
                       <Grid
                         container

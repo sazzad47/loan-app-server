@@ -65,9 +65,15 @@ const PhotoId = (props, ref) => {
 
   const saveData = async () => {
     try {
-      const res = await api.put(`/docs/${email}`, {
-        photo_ID: `uploads/${email}-${Date.now()}-${photo_ID.name}`,
-      });
+      const res = await api.put(
+        `/docs/${email}`,
+        { photo_ID, email },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setChecked(true);
 
       console.log(res);
