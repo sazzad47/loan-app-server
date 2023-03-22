@@ -63,6 +63,7 @@ export default function Signup({ setValue }) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [signed, setSigned] = useState(false);
+  const [userReg, setUserReg] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [alertState, setAlertState] = React.useState({
     open: false,
@@ -115,6 +116,7 @@ export default function Signup({ setValue }) {
       const res = api.put(`/docs/${email}`, {
         user_agreement_freeze: signed,
       });
+      setUserReg(true);
     },
   });
 
@@ -147,10 +149,10 @@ export default function Signup({ setValue }) {
   // };
 
   useEffect(() => {
-    if (signed) {
+    if (userReg) {
       setValue(4);
     }
-  });
+  }, [userReg]);
 
   useEffect(() => {
     if (error) {
@@ -253,7 +255,7 @@ export default function Signup({ setValue }) {
                   variant="filled"
                   size="small"
                   type="text"
-                  inputProps={{ maxLength: 11, pattern: "[0-9]*" }}
+                  inputProps={{ maxLength: 9, pattern: "[0-9]*" }}
                   {...getFieldProps("ss_number", {
                     onChange: (event) => {
                       const value = event.target.value;

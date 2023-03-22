@@ -39,13 +39,28 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
     const doc = await Documents.findOne({ where: { email: user.email } });
+
+    if (doc) {
+      await doc.destroy();
+    }
+
     const provider = await Provider.findOne({ where: { email: user.email } });
+
+    if (provider) {
+      await provider.destroy();
+    }
+
     const dispute = await Dispute.findOne({ where: { email: user.email } });
 
-    await doc.destroy();
-    await provider.destroy();
-    await dispute.destroy();
+    if (dispute) {
+      await dispute.destroy();
+    }
+
     await user.destroy();
 
     return res.json({ message: `User ${user.email} deleted!` });

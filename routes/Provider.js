@@ -2,16 +2,6 @@ const router = require("express").Router();
 const { User, sequelize, Documents, Provider } = require("../models");
 const bcrypt = require("bcrypt");
 
-// // GET ALL Provider
-router.get("/", async (req, res) => {
-  try {
-    const providers = await Provider.findAll();
-    res.status(200).json(providers);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
 // GET Provider
 router.get("/:email", async (req, res) => {
   try {
@@ -54,17 +44,27 @@ router.put("/:email", async (req, res) => {
   }
 });
 
-// // DELETE Provider details
-// router.delete("/:id", async (req, res) => {
+// DELETE Provider details
+router.delete("/:id", async (req, res) => {
+  try {
+    const user = await Provider.findOne({ where: { id: req.params.id } });
+
+    await user.destroy();
+
+    return res.json({ message: `deleted!` });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+// // // GET ALL Provider
+// router.get("/", async (req, res) => {
 //   try {
-//     const user = await User.findOne({ where: { id: req.params.id } });
-
-//     await user.destroy();
-
-//     return res.json({ message: `User ${user.email} deleted!` });
+//     const providers = await Provider.findAll();
+//     res.status(200).json(providers);
 //   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json({ error: "Something went wrong" });
+//     res.status(500).json(err);
 //   }
 // });
 

@@ -31,6 +31,7 @@ const Settings = ({ setValue }) => {
   useEffect(() => {
     const checkProviders = async () => {
       const res = await api.get(`/provider/${email}`);
+      console.log("this is email", res.data);
 
       if (res.data.length !== 0) {
         setProvider({
@@ -42,10 +43,21 @@ const Settings = ({ setValue }) => {
           security_word: res.data[0].security_word,
         });
         setUpdate(true);
+      } else {
+        console.log("this is prvde", res.data);
+
+        setProvider({
+          ...provider,
+          report_provider: "",
+          username: "",
+          password: "",
+          phone_no: "",
+          security_word: "",
+        });
       }
     };
     checkProviders();
-  }, [update, email]);
+  }, [email]);
   const theme = useTheme();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
