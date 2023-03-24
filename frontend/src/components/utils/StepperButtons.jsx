@@ -22,6 +22,7 @@ const StepperButtons = ({ activeStep, handleBack, handleNext, steps }) => {
         disable={activeStep === 1}
         onClick={handleBack}
         sx={{
+          display: `${activeStep === 1 ? "none" : "flex"}`,
           textTransform: "none",
           background: theme.palette.grey[300],
         }}

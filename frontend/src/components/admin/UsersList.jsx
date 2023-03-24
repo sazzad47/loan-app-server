@@ -260,10 +260,7 @@ const UsersList = () => {
                     control={<Checkbox checked={docs.self} />}
                     label="Self"
                   />
-                  <FormControlLabel
-                    control={<Checkbox checked={docs.smartcredit} />}
-                    label="Smartcredit"
-                  />
+
                   <FormControlLabel
                     control={<Checkbox checked={docs.teletrack_freeze} />}
                     label="Teletrack Freeze"

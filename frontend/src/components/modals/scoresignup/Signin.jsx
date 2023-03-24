@@ -111,7 +111,7 @@ export default function Signin({ setValue }) {
   console.log("messsage", msg);
   useEffect(() => {
     if (msg === "Success Login") {
-      setValue(4);
+      setValue(3);
     }
   }, [msg]);
 

@@ -53,10 +53,10 @@ export default function PageTabs() {
       label: "Credit info",
       component: <CreditInfo />,
     },
-    {
-      label: "Resources",
-      component: <Resources />,
-    },
+    // {
+    //   label: "Resources",
+    //   component: <Resources />,
+    // },
     {
       label: "Pull Credit Report",
       component: <Settings setValue={setValue} />,

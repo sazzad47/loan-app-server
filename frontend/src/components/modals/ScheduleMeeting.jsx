@@ -74,7 +74,7 @@ const ScheduleMeeting = (props, ref) => {
                 </Typography>
 
                 <a
-                  href="https://www.credit.com/extracredit/adv/trackit2?ref_id=0c41a1ae-6540-47b7-9d92-fb6f60c1b97e&end_user_type=MARKET_PLACE&pl=blog&af=32806"
+                  href="https://calendly.com/tgiscaleme"
                   target="_blank"
                   onClick={() => setChecked(true)}
                   rel="noreferrer"

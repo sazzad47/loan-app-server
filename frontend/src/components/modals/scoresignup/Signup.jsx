@@ -150,7 +150,7 @@ export default function Signup({ setValue }) {
 
   useEffect(() => {
     if (userReg) {
-      setValue(4);
+      setValue(3);
     }
   }, [userReg]);
 

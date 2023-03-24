@@ -140,7 +140,15 @@ const ScoreSignup = (props, ref) => {
                 }}
               >
                 {activeStep === 1 ? (
-                  <GetStarted />
+                  <>
+                    <StepperButtons
+                      steps={steps}
+                      // handleBack={handleBack}
+                      handleNext={handleNext}
+                      activeStep={activeStep}
+                    />
+                    <GetStarted />
+                  </>
                 ) : activeStep === 2 ? (
                   <>
                     <Signup setValue={props.setValue} />

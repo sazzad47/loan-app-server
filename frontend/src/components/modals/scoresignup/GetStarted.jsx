@@ -48,8 +48,8 @@ const GetStarted = () => {
               </Typography>
               Signup and Create an Account with TGIscaleme.com: Visit our
               website at www.tgiscaleme.com and click on the "Sign Up" button to
-              create a free account. Provide your name, email address, and
-              create a password.
+              create an account. Provide your name, email address, and create a
+              password.
               <Typography
                 variant="body2"
                 sx={{

@@ -95,7 +95,6 @@ const FreezeAccount = (props, ref) => {
                 <ClarityServices />
                 <ChexSystems />
                 <Sagestreamilc />
-                <SmartCredit />
                 <ListItem
                   secondaryAction={
                     <Checkbox
