@@ -60,8 +60,8 @@ const GetStarted = () => {
               >
                 Pull Your Credit:
               </Typography>
-              Once you've created your account, you can request a free credit
-              report from one of the major credit bureaus (Equifax, Experian, or
+              Once you've created your account, you can request a credit report
+              from one of the major credit bureaus (Equifax, Experian, or
               TransUnion). This will give you a detailed overview of your credit
               history, including your credit score, outstanding debts, and any
               negative marks on your record.
