@@ -55,14 +55,6 @@ const PhotoId = (props, ref) => {
     setPhotoID(selectedFile);
   };
 
-  // useEffect(() => {
-  //   if (photo_ID) {
-  //     setChecked(true);
-  //   } else {
-  //     setChecked(false);
-  //   }
-  // }, [photo_ID]);
-
   const saveData = async () => {
     try {
       const res = await api.put(
@@ -74,6 +66,7 @@ const PhotoId = (props, ref) => {
           },
         }
       );
+      handleClose();
       setChecked(true);
 
       console.log(res);

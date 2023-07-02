@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-// NEW POST
+// NEW DOC
 router.post(
   "/",
   upload.fields([
@@ -76,7 +76,7 @@ router.post(
   }
 );
 
-//GET ALL POSTS
+//GET ALL DOC
 router.get("/", async (req, res) => {
   const email = req.query.email;
   try {
@@ -92,7 +92,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//GET SPECIFIC POSTS
+//GET SPECIFIC DOC
 router.get("/:email", async (req, res) => {
   try {
     const doc = await Documents.findOne({ where: { email: req.params.email } });
@@ -102,7 +102,7 @@ router.get("/:email", async (req, res) => {
   }
 });
 
-// UPDATE POST
+// UPDATE DOCUMENT
 router.put(
   "/:email",
   upload.fields([
@@ -111,10 +111,12 @@ router.put(
   ]),
   async (req, res) => {
     console.log(req.files);
-    if ("photo_ID" in req.files) {
-      req.body.photo_ID = req.files.photo_ID[0].path;
-    } else {
-      req.body.proof_of_address = req.files.proof_of_address[0].path;
+    if (req.files) {
+      if ("photo_ID" in req.files) {
+        req.body.photo_ID = req.files.photo_ID[0].path;
+      } else if ("proof_of_address" in req.files) {
+        req.body.proof_of_address = req.files.proof_of_address[0].path;
+      }
     }
 
     const email = req.params.email;

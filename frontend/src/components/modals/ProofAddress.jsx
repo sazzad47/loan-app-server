@@ -62,7 +62,7 @@ const ProofAddress = (props, ref) => {
         }
       );
       setChecked(true);
-
+      handleClose();
       console.log(res);
     } catch (err) {
       console.log(err);

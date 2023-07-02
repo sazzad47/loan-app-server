@@ -38,7 +38,7 @@ const Experian = () => {
   };
 
   const saveToDb = async () => {
-    // console.log(!checked);
+    console.log(!checked);
 
     try {
       const res = await api.put(`/docs/${email}`, {
