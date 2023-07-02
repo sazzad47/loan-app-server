@@ -6,8 +6,10 @@ const nodemailer = require("nodemailer");
 
 const { sequelize, User, Documents } = require("../models");
 
+// UPDATE PASSWORD
 router.post("/update-password", async (req, res) => {
   const { email, newPassword } = req.body;
+  console.log(req.body);
   try {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
@@ -150,13 +152,16 @@ function sendEmail({ recipient_email, OTP }) {
 }
 
 router.post("/send_recovery_email", async (req, res) => {
-  const { recipient_email } = req.body;
+  const { recipient_email, OTP } = req.body;
+  console.log(req.body);
   const user = await User.findOne({ where: { email: recipient_email } });
+  console.log(user);
+
   if (!user) {
     res.status(404).json(err);
   } else {
     console.log(req.body);
-    sendEmail(req.body)
+    sendEmail(req.body, OTP)
       .then((response) => res.send(response.message))
       .catch((error) => res.status(500).send(error.message));
   }
