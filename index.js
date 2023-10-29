@@ -13,8 +13,10 @@ const paymentRoute = require("./routes/Payment");
 
 app.use(express.json());
 const cors = require("cors");
+const allowedOrigins = ['http://localhost:3000', 'https://jade-dragon-3b012c.netlify.app', 'http://services.tgiscaleme.com'];
+
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: allowedOrigins,
 }));
 
 const { sequelize } = require("./models");
