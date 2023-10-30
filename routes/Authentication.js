@@ -36,11 +36,12 @@ router.post("/update-password", async (req, res) => {
 router.post("/register", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  console.log('hashedPassword', hashedPassword)
   try {
     const newUser = await User.create({
       //   username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       state: req.body.state,
